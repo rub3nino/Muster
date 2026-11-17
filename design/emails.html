@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Emails · Muster</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/tokens.css?v=6">
+<link rel="stylesheet" href="css/ui.css?v=6">
+<link rel="stylesheet" href="css/pages.css?v=6">
+<style>
+  .tpl-list { display: flex; flex-direction: column; }
+  .tpl { display: flex; align-items: center; gap: var(--s3); padding: var(--s3) var(--s4); border: 0; border-bottom: 1px solid var(--line); background: none; text-align: left; width: 100%; color: var(--ink); }
+  .tpl:last-child { border-bottom: 0; }
+  .tpl:hover { background: var(--surface-2); }
+  .tpl[aria-current="true"] { background: var(--accent-soft); }
+  .tpl[aria-current="true"] .tpl__name { color: var(--accent-ink); }
+  .tpl__name { font: var(--t-ui); }
+  .tpl__when { font: var(--t-small); color: var(--ink-3); }
+  .em-grid { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: var(--s5); align-items: start; }
+  @media (max-width: 1100px) { .em-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body data-shell data-page="emails" data-title="Emails" data-title-key="nav.emails">
+<div data-content>
+  <header class="page-head">
+    <div>
+      <h1 class="page-head__title" data-i18n="em.title">Emails</h1>
+      <p class="page-head__lead" data-i18n="em.lead">One template per step. They leave by themselves at the right moment; you can always resend from a registration.</p>
+    </div>
+  </header>
+
+  <div class="em-grid">
+    <nav class="card" aria-label="Templates"><div class="tpl-list" id="tpls"></div></nav>
+
+    <div class="stack stack--lg" style="min-width:0">
+      <div class="mail-split">
+        <form class="card" onsubmit="event.preventDefault();Muster.toast(Muster.t('toast.saved','Saved'))">
+          <div class="card__body stack">
+            <div class="row row--between row--wrap"><h2 class="section__title" id="tpl-name"></h2><label class="switch"><input type="checkbox" checked><span class="switch__track"></span><span class="small muted" data-i18n="em.on">Active</span></label></div>
+            <p class="small muted" id="tpl-when"></p>
+            <div class="seg" data-seg role="group" aria-label="Language of this template"><button class="seg__item" type="button" aria-pressed="true">EN</button><button class="seg__item" type="button" aria-pressed="false">IT</button><button class="seg__item" type="button" aria-pressed="false">RO</button></div>
+            <label class="field"><span class="field__label" data-i18n="em.subject">Subject</span><input class="input" id="subj"></label>
+            <label class="field"><span class="field__label" data-i18n="em.body">Message</span><textarea class="textarea" id="body" style="min-height:200px"></textarea></label>
+            <div class="field"><span class="field__label" data-i18n="em.vars">Insert a value</span>
+              <div class="tags" id="vars"></div></div>
+          </div>
+          <div class="card__foot">
+            <button class="btn" type="button" data-toast="Test sent to andrei.pop@example.com" data-toast-key="toast.test"><span data-icon="send"></span><span data-i18n="em.test">Send me a test</span></button>
+            <button class="btn btn--primary" type="submit" data-i18n="act.save">Save</button>
+          </div>
+        </form>
+
+        <div class="mailframe">
+          <div class="mailframe__bar">
+            <span class="small muted grow" data-i18n="em.preview">Preview with Ana Moldovan</span>
+            <div class="seg" data-seg role="group" id="dev" style="padding:3px"><button class="seg__item" type="button" aria-pressed="true" data-value="desk" style="min-height:28px;padding:0 10px" data-i18n="em.desk">Desktop</button><button class="seg__item" type="button" aria-pressed="false" data-value="phone" style="min-height:28px;padding:0 10px" data-i18n="em.phone">Phone</button></div>
+          </div>
+          <div class="mailframe__canvas"><article class="mailframe__doc" id="doc"></article></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/i18n.js?v=6"></script>
+<script src="js/muster.js?v=6"></script>
+<script>
+document.addEventListener('muster:ready', () => {
+  const R = Muster, $ = R.$, esc = R.esc;
+  const T = [
+    { id: 'received', ic: 'checkc', k: 'em.t1', en: 'Registration received', wk: 'em.w1', w: 'Right after the form is sent', subj: 'Restart Camp 2027 · we got your registration', body: 'Hi {first},\n\nwe received your registration, number {number}. Nothing to pay yet: when it is your turn you will get the payment link.\n\nSee you in Varazze!' },
+    { id: 'waitlist', ic: 'clock', k: 'em.t2', en: 'Waitlist', wk: 'em.w2', w: 'When the camp or the package is full', subj: 'Restart Camp 2027 · you are on the waitlist', body: 'Hi {first},\n\nthe places are taken right now. You are number {number}: if one frees up, it is yours first.' },
+    { id: 'pay', ic: 'wallet', k: 'em.t3', en: 'Payment details', wk: 'em.w3', w: 'When you send the details · starts the 48 h', subj: 'Restart Camp 2027 · {hours} hours for the {deposit} deposit', body: 'Hi {first},\n\nit is your turn! Pay the {deposit} deposit by {deadline} to secure your place.\n\n{pay_button}\n\nThe rest ({rest}) is paid in cash on arrival.' },
+    { id: 'reminder', ic: 'timer', k: 'em.t4', en: 'Deposit reminder', wk: 'em.w4', w: '12 h before the deadline, if nothing was paid', subj: 'Restart Camp 2027 · reminder: deposit due soon', body: 'Hi {first},\n\nwe have not received the {deposit} deposit yet. Your place stays yours until {deadline}.\n\n{pay_button}' },
+    { id: 'secured', ic: 'shield', k: 'em.t5', en: 'Place secured', wk: 'em.w5', w: 'When the deposit is recorded', subj: 'Restart Camp 2027 · your place is secured', body: 'Hi {first},\n\nwe received your deposit. Your place is secured. Bring {rest} in cash on 3 January.' },
+    { id: 'expired', ic: 'alert', k: 'em.t6', en: 'Deadline passed', wk: 'em.w6', w: 'When you free the place', subj: 'Restart Camp 2027 · the deposit deadline passed', body: 'Hi {first},\n\nwe did not receive the deposit in time, so the place went to the next person. Paid already? Reply with the receipt.' },
+    { id: 'paid', ic: 'check', k: 'em.t7', en: 'Paid in full', wk: 'em.w7', w: 'When the full price is recorded', subj: 'Restart Camp 2027 · thank you, all paid', body: 'Hi {first},\n\nwe received the full amount. Nothing left to pay. See you soon!' },
+    { id: 'cancelled', ic: 'x', k: 'em.t8', en: 'Cancelled', wk: 'em.w8', w: 'When you cancel a registration', subj: 'Restart Camp 2027 · registration cancelled', body: 'Hi {first},\n\nyour registration has been cancelled. If this is a mistake, reply and we will put it back.' },
+  ];
+  const VARS = ['first', 'number', 'package', 'deposit', 'rest', 'deadline', 'hours', 'pay_button'];
+  const SAMPLE = { first: 'Ana', number: '4', package: 'Standard', deposit: '50 €', rest: '100 €', hours: '48', deadline: R.fmtDate(new Date(Date.now() + 48 * 3600e3).toISOString(), 'long') };
+  let cur = 'pay';
+  function renderList() {
+    $('#tpls').innerHTML = T.map((t) => `<button class="tpl" type="button" data-tpl="${t.id}" aria-current="${t.id === cur}"><span class="rowline__icon" style="width:32px;height:32px">${R.icon(t.ic, 'i--sm')}</span><span class="grow"><span class="tpl__name" style="display:block">${esc(R.t(t.k, t.en))}</span><span class="tpl__when">${esc(R.t(t.wk, t.w))}</span></span></button>`).join('');
+  }
+  function preview() {
+    const fill = (s) => esc(s).replace(/\{(\w+)\}/g, (m, k) => k === 'pay_button' ? `<span class="mbtn">${esc(R.t('em.paybtn', 'Pay the deposit · 50 €'))}</span>` : esc(SAMPLE[k] ?? m));
+    const t = T.find((x) => x.id === cur);
+    $('#doc').innerHTML = `<div style="font:600 11px/1 var(--font);letter-spacing:.06em;text-transform:uppercase;color:#9C9CA3;margin-bottom:14px">Restart Camp 2027</div><h1>${fill($('#subj').value.replace(/^Restart Camp 2027 · /, ''))}</h1>${fill($('#body').value).split('\n\n').map((p) => `<p style="margin:0 0 12px">${p.replace(/\n/g, '<br>')}</p>`).join('')}${t.id === 'pay' ? `<div class="mbox"><b>${esc(R.t('em.note', 'Payment note'))}:</b> Moldovan Ana</div>` : ''}<p style="color:#9C9CA3;font-size:12.5px;margin-top:18px">${esc(R.t('em.foot', 'Reply to this email to reach the organisers.'))}</p>`;
+  }
+  function load() {
+    const t = T.find((x) => x.id === cur);
+    $('#tpl-name').textContent = R.t(t.k, t.en); $('#tpl-when').textContent = R.t(t.wk, t.w);
+    $('#subj').value = t.subj; $('#body').value = t.body; renderList(); preview();
+  }
+  $('#vars').innerHTML = VARS.map((v) => `<button class="var" type="button" data-var="${v}">{${v}}</button>`).join('');
+  document.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-tpl]'); if (b) { cur = b.dataset.tpl; load(); return; }
+    const v = e.target.closest('[data-var]'); if (v) { const ta = $('#body'); const s = ta.selectionStart; ta.setRangeText('{' + v.dataset.var + '}', s, ta.selectionEnd, 'end'); ta.focus(); preview(); }
+  });
+  $('#subj').addEventListener('input', preview); $('#body').addEventListener('input', preview);
+  $('#dev').addEventListener('seg:change', (e) => $('#doc').classList.toggle('is-phone', e.detail === 'phone'));
+  document.addEventListener('muster:lang', load);
+  load();
+});
+</script>
+</body>
+</html>

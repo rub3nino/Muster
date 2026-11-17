@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Form &amp; consents · Muster</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/tokens.css?v=6">
+<link rel="stylesheet" href="css/ui.css?v=6">
+<link rel="stylesheet" href="css/pages.css?v=6">
+<style>
+  .fieldrow { display: flex; align-items: center; gap: var(--s3); padding: var(--s3) var(--s4); border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+  .fieldrow:last-child { border-bottom: 0; }
+  .fieldrow__grip { color: var(--ink-3); cursor: grab; }
+  .fieldrow__name { flex: 1 1 180px; min-width: 0; }
+  .fieldrow__name b { font-weight: 500; }
+  .fieldrow__end { display: flex; gap: var(--s4); align-items: center; flex-wrap: wrap; }
+  @media (max-width: 560px) { .fieldrow__end { width: 100%; padding-left: 30px; } }
+</style>
+</head>
+<body data-shell data-page="form" data-title="Form & consents" data-title-key="nav.form">
+<div data-content>
+  <header class="page-head">
+    <div>
+      <h1 class="page-head__title" data-i18n="fb.title">Form &amp; consents</h1>
+      <p class="page-head__lead" data-i18n="fb.lead">What the form asks for. Name, birth date, email and phone are always required: the server needs them to check age and duplicates.</p>
+    </div>
+    <div class="page-head__actions"><a class="btn" href="public.html" target="_blank" rel="noopener"><span data-icon="eye"></span><span data-i18n="fb.preview">Preview form</span></a></div>
+  </header>
+
+  <section>
+    <div class="section__head"><h2 class="section__title" data-i18n="fb.fields">Fields</h2><span class="small faint" data-i18n="fb.drag">Drag to reorder</span></div>
+    <div class="rows" id="fields"></div>
+  </section>
+
+  <section class="section">
+    <div class="section__head"><div><h2 class="section__title" data-i18n="fb.blocks">Text blocks</h2><p class="section__lead" data-i18n="fb.blocks.s">Short paragraphs inside the form: what’s included, how payment works, rules.</p></div><button class="btn btn--sm" type="button" data-toast="Block added to draft" data-toast-key="toast.block"><span data-icon="plus"></span><span data-i18n="fb.addblock">Add block</span></button></div>
+    <div class="rows">
+      <div class="rowline"><span class="rowline__icon" data-icon="wallet"></span><div class="rowline__text"><div class="rowline__title" data-i18n="pf.how">How payment works</div><div class="rowline__sub" data-i18n="fb.b1">Before the packages · visible</div></div><div class="rowline__end"><label class="switch"><input type="checkbox" checked><span class="switch__track"></span><span class="sr-only" data-i18n="vis">Visible</span></label><button class="btn btn--ghost btn--icon btn--sm" type="button" aria-label="Edit"><span data-icon="edit"></span></button></div></div>
+      <div class="rowline"><span class="rowline__icon" data-icon="shirt"></span><div class="rowline__text"><div class="rowline__title" data-i18n="fb.b2t">What to bring</div><div class="rowline__sub" data-i18n="fb.b2">Before sending · hidden</div></div><div class="rowline__end"><label class="switch"><input type="checkbox"><span class="switch__track"></span><span class="sr-only" data-i18n="vis">Visible</span></label><button class="btn btn--ghost btn--icon btn--sm" type="button" aria-label="Edit"><span data-icon="edit"></span></button></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section__head"><div><h2 class="section__title" data-i18n="fb.consents">Consents</h2><p class="section__lead" data-i18n="fb.consents.s">Each one is saved with the registration, with date and wording. Changing the text later does not change what people already accepted.</p></div><button class="btn btn--sm" type="button" data-toast="Consent added to draft" data-toast-key="toast.consent"><span data-icon="plus"></span><span data-i18n="fb.addconsent">Add consent</span></button></div>
+    <div class="rows">
+      <div class="rowline"><span class="rowline__icon" data-icon="form"></span><div class="rowline__text"><div class="rowline__title"><span data-i18n="pf.rules">camp rules</span> <span class="chip chip--plain" data-i18n="fb.req">Required</span></div><div class="rowline__sub" data-i18n="fb.c1">Links to /rules · version 3, 12 Nov</div></div></div>
+      <div class="rowline"><span class="rowline__icon" data-icon="shield"></span><div class="rowline__text"><div class="rowline__title"><span data-i18n="pf.privacy">privacy policy</span> <span class="chip chip--plain" data-i18n="fb.req">Required</span></div><div class="rowline__sub" data-i18n="fb.c2">Links to /privacy · version 2, 8 Nov</div></div></div>
+      <div class="rowline"><span class="rowline__icon" data-icon="heart"></span><div class="rowline__text"><div class="rowline__title"><span data-i18n="fb.c3t">Special category data</span> <span class="chip chip--plain" data-i18n="fb.req">Required</span></div><div class="rowline__sub" data-i18n="fb.c3">Health and faith data, GDPR art. 9</div></div></div>
+      <div class="rowline"><span class="rowline__icon" data-icon="eye"></span><div class="rowline__text"><div class="rowline__title"><span data-i18n="fb.c4t">Photos</span> <span class="chip chip--plain" data-i18n="opt">optional</span></div><div class="rowline__sub" data-i18n="fb.c4">Shown unticked. 61% said yes.</div></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section__head"><div><h2 class="section__title" data-i18n="fb.embed">Put the form on your site</h2><p class="section__lead" data-i18n="fb.embed.s">One line where the form should appear. It adapts its height and follows the visitor’s language.</p></div></div>
+    <div class="card card--pad stack">
+      <pre class="code" id="embed">&lt;script src="https://register.example.org/embed.js" data-lang="auto" async&gt;&lt;/script&gt;</pre>
+      <div class="row row--wrap"><button class="btn btn--sm" type="button" data-copy="embed"><span data-icon="copy"></span><span data-i18n="act.copy">Copy</span></button><span class="small faint" data-i18n="fb.origins">Allowed sites: tabararestart.it</span></div>
+    </div>
+  </section>
+</div>
+
+<script src="js/i18n.js?v=6"></script>
+<script src="js/muster.js?v=6"></script>
+<script>
+document.addEventListener('muster:ready', () => {
+  const R = Muster, esc = R.esc;
+  const F = [
+    ['user', 'fld.name', 'Name', true, true, true], ['cake', 'fld.birth2', 'Date of birth', true, true, true], ['mail', 'fld.email', 'Email', true, true, true], ['phone', 'fld.phone', 'Phone', true, true, true],
+    ['user', 'fld.gender', 'Gender', true, true, false], ['pin', 'fld.city', 'City', true, true, false], ['church', 'fld.church', 'Church', true, false, false],
+    ['shirt', 'fld.shirt', 'T-shirt', true, false, false], ['car', 'fld.transport', 'Transport', true, false, false], ['heart', 'fld.allergies', 'Allergies & diet', true, false, false],
+  ];
+  function render() {
+    R.$('#fields').innerHTML = F.map(([ic, k, en, on, req, locked], i) => `
+      <div class="fieldrow">
+        <span class="fieldrow__grip">${R.icon(locked ? 'lock' : 'grip', 'i--sm')}</span>
+        <span class="rowline__icon" style="width:32px;height:32px">${R.icon(ic, 'i--sm')}</span>
+        <span class="fieldrow__name"><b>${esc(R.t(k, en))}</b>${locked ? `<span class="small faint" style="display:block">${esc(R.t('fb.locked', 'Always on'))}</span>` : ''}</span>
+        <span class="fieldrow__end">
+          <label class="switch"><input type="checkbox" ${on ? 'checked' : ''} ${locked ? 'disabled' : ''}><span class="switch__track"></span><span class="small muted">${esc(R.t('fb.inform', 'In form'))}</span></label>
+          <label class="switch"><input type="checkbox" ${req ? 'checked' : ''} ${locked ? 'disabled' : ''}><span class="switch__track"></span><span class="small muted">${esc(R.t('fb.req', 'Required'))}</span></label>
+        </span>
+      </div>`).join('');
+  }
+  document.addEventListener('muster:lang', render);
+  render();
+});
+</script>
+</body>
+</html>

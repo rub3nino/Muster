@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Status &amp; packages · Muster</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/tokens.css?v=6">
+<link rel="stylesheet" href="css/ui.css?v=6">
+<link rel="stylesheet" href="css/pages.css?v=6">
+</head>
+<body data-shell data-page="live" data-title="Status & packages" data-title-key="nav.live">
+<div data-content>
+
+  <header class="page-head">
+    <div>
+      <div class="row" style="margin-bottom:10px"><span class="chip chip--ok chip--live" data-i18n="live.chip">Live</span><span class="small muted" data-i18n="live.published">Published today at 09:40 by Andrei P.</span></div>
+      <h1 class="page-head__title" data-i18n="live.title">Live on site</h1>
+      <p class="page-head__lead" data-i18n="live.lead">Everything visitors see and can choose. Changes stay in draft until you publish them, so nothing goes live by mistake.</p>
+    </div>
+    <div class="page-head__actions">
+      <a class="btn" href="public.html" target="_blank" rel="noopener"><span data-icon="external"></span><span data-i18n="live.open">Open public form</span></a>
+    </div>
+  </header>
+
+  <div class="live-grid">
+    <div class="stack stack--lg" style="min-width:0">
+
+      <!-- 1. the form, as a whole -->
+      <section class="card" aria-labelledby="door-t">
+        <div class="card__body stack">
+          <div>
+            <h2 class="section__title" id="door-t" data-i18n="door.title">Registration form</h2>
+            <p class="section__lead" data-i18n="door.lead">One mode at a time. It overrides every package below.</p>
+          </div>
+          <div class="modes" role="radiogroup" aria-labelledby="door-t" id="door">
+            <label class="mode"><input type="radio" name="door" value="open" checked>
+              <span class="mode__icon mode__icon--ok" data-icon="checkc"></span>
+              <span class="mode__text"><b data-i18n="door.open">Open</b><span data-i18n="door.open.s">The form accepts registrations for the packages that are live.</span></span></label>
+            <label class="mode"><input type="radio" name="door" value="countdown">
+              <span class="mode__icon mode__icon--accent" data-icon="timer"></span>
+              <span class="mode__text"><b data-i18n="door.countdown">Countdown</b><span data-i18n="door.countdown.s">Shows the opening date and places left. Opens by itself at that time.</span></span></label>
+            <label class="mode"><input type="radio" name="door" value="paused">
+              <span class="mode__icon mode__icon--warn" data-icon="pause"></span>
+              <span class="mode__text"><b data-i18n="door.paused">Paused</b><span data-i18n="door.paused.s">Form hidden, your message shown. New people can join the waitlist.</span></span></label>
+            <label class="mode"><input type="radio" name="door" value="closed">
+              <span class="mode__icon mode__icon--bad" data-icon="lock"></span>
+              <span class="mode__text"><b data-i18n="door.closed">Closed</b><span data-i18n="door.closed.s">Nobody can register, not even on the waitlist.</span></span></label>
+          </div>
+          <div class="grid-2" id="door-extra">
+            <label class="field" data-show="countdown"><span class="field__label" data-i18n="door.opensat">Opens at</span><input class="input" type="datetime-local" value="2026-11-21T12:00" data-draft="opens"><span class="field__hint" data-i18n="tz">Italian time (Europe/Rome)</span></label>
+            <label class="field" data-show="paused closed"><span class="field__label" data-i18n="door.msg">Message on the site</span><textarea class="textarea" style="min-height:76px" data-draft="msg">Early Bird places are gone. Standard and Plus open on 21 November at 12:00.</textarea></label>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. packages -->
+      <section aria-labelledby="pk-t">
+        <div class="section__head"><div><h2 class="section__title" id="pk-t" data-i18n="pk.title">Packages</h2><p class="section__lead" data-i18n="pk.lead">Each one has its own window and limit. Sold out moves people to the waitlist.</p></div><a class="btn btn--sm btn--ghost" href="offer.html"><span data-icon="edit"></span><span data-i18n="pk.edit">Edit prices</span></a></div>
+        <div class="rows" id="pk-rows"></div>
+      </section>
+
+      <!-- 3. capacity -->
+      <section class="card" aria-labelledby="cap-t">
+        <div class="card__body stack">
+          <div class="row row--between row--wrap">
+            <div><h2 class="section__title" id="cap-t" data-i18n="cap.title">Whole camp</h2><p class="section__lead" data-i18n="cap.lead">Places counted across all packages, cancelled and waitlist excluded.</p></div>
+            <div class="num"><b style="font-size:22px">98</b> <span class="muted">/ 120</span></div>
+          </div>
+          <div class="meter meter--accent"><i style="--v:81%"></i></div>
+          <div class="grid-2">
+            <label class="field"><span class="field__label" data-i18n="cap.total">Places in total</span><input class="input" type="number" min="0" value="120" data-draft="cap"></label>
+            <label class="field"><span class="field__label" data-i18n="cap.full">When the camp is full</span>
+              <select class="select" data-draft="full"><option value="wait" data-i18n="cap.full.wait">New people go on the waitlist</option><option value="close" data-i18n="cap.full.close">Close the form</option></select></label>
+          </div>
+          <div class="rowline" style="padding:0;border:0">
+            <div class="rowline__text"><div class="rowline__title" data-i18n="cap.show">Show places left</div><div class="rowline__sub" data-i18n="cap.show.s">Only when fewer than 30 are left: urgency without looking empty.</div></div>
+            <label class="switch"><input type="checkbox" checked data-draft="showspots"><span class="switch__track"></span><span class="sr-only" data-i18n="cap.show">Show places left</span></label>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. notices -->
+      <section aria-labelledby="nt-t">
+        <div class="section__head"><div><h2 class="section__title" id="nt-t" data-i18n="nt.title">Notices</h2><p class="section__lead" data-i18n="nt.lead">Short messages above the form. They can switch on and off by date.</p></div><button class="btn btn--sm" type="button" data-modal-open="m-notice"><span data-icon="plus"></span><span data-i18n="nt.add">New notice</span></button></div>
+        <div class="rows">
+          <div class="rowline">
+            <span class="rowline__icon" style="background:var(--warn-soft);color:var(--warn)" data-icon="megaphone"></span>
+            <div class="rowline__text"><div class="rowline__title"><span data-i18n="nt.1.t">Early Bird sold out</span> <span class="chip chip--warn" data-i18n="tone.warn">Attention</span></div><div class="rowline__sub" data-i18n="nt.1.s">Shown until 21 Nov, 12:00 · then hides by itself</div></div>
+            <div class="rowline__end"><label class="switch"><input type="checkbox" checked data-draft="n1"><span class="switch__track"></span><span class="sr-only" data-i18n="vis">Visible</span></label><button class="btn btn--ghost btn--icon btn--sm" type="button" aria-label="Edit" data-modal-open="m-notice"><span data-icon="edit"></span></button></div>
+          </div>
+          <div class="rowline">
+            <span class="rowline__icon" style="background:var(--info-soft);color:var(--info)" data-icon="info"></span>
+            <div class="rowline__text"><div class="rowline__title"><span data-i18n="nt.2.t">Transport from Turin</span> <span class="chip chip--info" data-i18n="tone.info">Info</span></div><div class="rowline__sub" data-i18n="nt.2.s">Always visible</div></div>
+            <div class="rowline__end"><label class="switch"><input type="checkbox" data-draft="n2"><span class="switch__track"></span><span class="sr-only" data-i18n="vis">Visible</span></label><button class="btn btn--ghost btn--icon btn--sm" type="button" aria-label="Edit" data-modal-open="m-notice"><span data-icon="edit"></span></button></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. what happens next, automatically -->
+      <section aria-labelledby="sc-t">
+        <div class="section__head"><div><h2 class="section__title" id="sc-t" data-i18n="sc.title">Scheduled</h2><p class="section__lead" data-i18n="sc.lead">What changes on the site by itself, and when. Nothing else moves without you.</p></div></div>
+        <div class="card card--pad">
+          <ul class="timeline">
+            <li><span class="timeline__icon timeline__icon--accent" data-icon="timer"></span><div class="timeline__text"><span data-i18n="sc.1">Standard and Plus open · countdown ends</span><div class="timeline__meta" data-date="2026-11-21T11:00:00Z" data-fmt="long"></div></div></li>
+            <li><span class="timeline__icon" data-icon="megaphone"></span><div class="timeline__text"><span data-i18n="sc.2">Notice “Early Bird sold out” hides</span><div class="timeline__meta" data-date="2026-11-21T11:00:00Z" data-fmt="long"></div></div></li>
+            <li><span class="timeline__icon" data-icon="lock"></span><div class="timeline__text"><span data-i18n="sc.3">Registrations close</span><div class="timeline__meta" data-date="2026-12-20T23:00:00Z" data-fmt="long"></div></div></li>
+          </ul>
+        </div>
+      </section>
+
+      <div class="publishbar" id="pubbar" role="region" aria-label="Unpublished changes">
+        <span data-icon="edit"></span>
+        <div class="publishbar__text"><span id="pub-n"></span><small data-i18n="pub.sub">Visitors still see the published version.</small></div>
+        <button class="btn btn--ghost btn--sm" type="button" id="discard" data-i18n="pub.discard">Discard</button>
+        <button class="btn btn--light btn--sm" type="button" id="review" data-i18n="pub.review">Review &amp; publish</button>
+      </div>
+    </div>
+
+    <!-- live preview of the public widget -->
+    <aside class="live-aside" aria-label="Preview">
+      <div class="live-aside__sticky">
+        <div class="row row--between" style="margin-bottom:10px"><span class="micro" data-i18n="prev.title">What visitors see</span><span class="chip chip--plain" id="prev-badge" data-i18n="prev.published">Published</span></div>
+        <div class="phone"><div class="phone__screen" id="phone"></div></div>
+        <p class="small faint" style="margin-top:10px;text-align:center" data-i18n="prev.note">Preview of the draft. Prices and places come from the server.</p>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- review & publish -->
+<div class="modal" id="m-pub" role="dialog" aria-modal="true" aria-labelledby="m-pub-t">
+  <button class="modal__scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="modal__box">
+    <div class="modal__head"><h2 class="modal__title" id="m-pub-t" data-i18n="mpub.title">Publish these changes?</h2></div>
+    <div class="modal__body">
+      <p class="muted small" data-i18n="mpub.text">They go live on the site right away. Registrations already received do not change.</p>
+      <div class="diff" id="diff"></div>
+      <div class="callout callout--warn" id="pub-warn" hidden><span data-icon="alert"></span><div class="callout__body"><span class="callout__title" data-i18n="mpub.warn.t">The form will stop accepting people</span><span data-i18n="mpub.warn.s">Anyone filling it in right now sees the closed message when they submit.</span></div></div>
+    </div>
+    <div class="modal__foot">
+      <button class="btn" type="button" data-modal-close data-i18n="act.cancel">Cancel</button>
+      <button class="btn btn--primary" type="button" id="publish" data-autofocus><span data-icon="live"></span><span data-i18n="mpub.ok">Publish now</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- notice editor -->
+<div class="modal" id="m-notice" role="dialog" aria-modal="true" aria-labelledby="m-notice-t">
+  <button class="modal__scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="modal__box">
+    <div class="modal__head"><h2 class="modal__title" id="m-notice-t" data-i18n="mnt.title">Notice</h2></div>
+    <div class="modal__body">
+      <label class="field"><span class="field__label" data-i18n="mnt.t">Title</span><input class="input" value="Early Bird sold out" data-autofocus></label>
+      <label class="field"><span class="field__label" data-i18n="mnt.b">Text</span><textarea class="textarea">All 30 places went in 2 days. Standard and Plus open on 21 November at 12:00.</textarea></label>
+      <div class="field"><span class="field__label" data-i18n="mnt.tone">Tone</span>
+        <div class="seg seg--full" data-seg role="group"><button class="seg__item" type="button" aria-pressed="false" data-i18n="tone.info">Info</button><button class="seg__item" type="button" aria-pressed="true" data-i18n="tone.warn">Attention</button><button class="seg__item" type="button" aria-pressed="false" data-i18n="tone.bad">Important</button></div></div>
+      <div class="grid-2">
+        <label class="field"><span class="field__label"><span data-i18n="mnt.from">Show from</span> <small data-i18n="opt">optional</small></span><input class="input" type="datetime-local"></label>
+        <label class="field"><span class="field__label"><span data-i18n="mnt.to">Hide after</span> <small data-i18n="opt">optional</small></span><input class="input" type="datetime-local" value="2026-11-21T12:00"></label>
+      </div>
+    </div>
+    <div class="modal__foot">
+      <button class="btn btn--danger" type="button" data-modal-close style="margin-right:auto" data-i18n="mnt.del">Delete</button>
+      <button class="btn" type="button" data-modal-close data-i18n="act.cancel">Cancel</button>
+      <button class="btn btn--primary" type="button" data-modal-close data-toast="Notice saved to draft" data-toast-key="toast.notice" data-i18n="act.save">Save</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/i18n.js?v=6"></script>
+<script src="js/muster.js?v=6"></script>
+<script src="js/data.js?v=6"></script>
+<script>
+document.addEventListener('muster:ready', () => {
+  const R = Muster, $ = R.$, $$ = R.$$, esc = R.esc;
+  /* draft vs published: every control writes into `draft`; the bar counts differences */
+  const published = { door: 'open', eb: true, std: true, plus: true, showspots: true, n1: true, n2: false, cap: '120', full: 'wait', opens: '2026-11-21T12:00', msg: $('[data-draft="msg"]').value };
+  const draft = { ...published };
+  const PK_STATE = {
+    live: ['chip--ok chip--live', 'pks.live', 'Live'], soldout: ['chip--warn', 'pks.soldout', 'Sold out'],
+    off: ['chip--plain', 'pks.off', 'Closed'], scheduled: ['chip--accent', 'pks.scheduled', 'Scheduled'],
+  };
+  const pkState = (p) => (!draft[p.id] ? 'off' : p.state);
+  function renderPackages() {
+    $('#pk-rows').innerHTML = R.PACKAGES.map((p) => {
+      const st = PK_STATE[pkState(p)];
+      const pct = p.cap ? Math.round((p.taken / p.cap) * 100) : null;
+      return `<div class="rowline">
+        <span class="rowline__icon" style="${p.id === 'eb' ? 'background:var(--accent-soft);color:var(--accent)' : ''}">${R.icon(p.id === 'eb' ? 'zap' : 'tag')}</span>
+        <div class="rowline__text">
+          <div class="rowline__title">${esc(p.name)} <span class="num muted" style="font-weight:400">${p.was ? `<s class="faint">${R.money(p.was)}</s> ` : ''}${R.money(p.price)}</span> <span class="chip ${st[0]}">${esc(R.t(st[1], st[2]))}</span></div>
+          <div class="rowline__sub">${p.cap ? esc(R.t('pk.taken', '{a} of {b} taken', { a: p.taken, b: p.cap })) : esc(R.t('pk.nolimit', '{a} taken · no own limit', { a: p.taken }))} · ${esc(p.id === 'eb' ? R.t('pk.win.eb', '12 → 20 Nov') : R.t('pk.win.std', '21 Nov → 20 Dec'))}</div>
+          ${pct !== null ? `<div class="meter meter--sm ${pct >= 100 ? 'meter--warn' : 'meter--accent'}" style="margin-top:8px;max-width:320px"><i style="--v:${Math.min(100, pct)}%"></i></div>` : ''}
+        </div>
+        <div class="rowline__end">
+          <label class="switch"><input type="checkbox" ${draft[p.id] ? 'checked' : ''} data-pk="${p.id}"><span class="switch__track"></span><span class="small muted">${esc(R.t('pk.accept', 'Accepting'))}</span></label>
+        </div>
+      </div>`;
+    }).join('');
+  }
+  const LABEL = {
+    door: (v) => R.t('door.' + v, { open: 'Open', countdown: 'Countdown', paused: 'Paused', closed: 'Closed' }[v]),
+    on: (v) => (v ? R.t('on', 'On') : R.t('off', 'Off')),
+  };
+  const NAMES = { door: ['door.title', 'Registration form'], eb: [null, 'Early Bird'], std: [null, 'Standard'], plus: [null, 'Plus'], showspots: ['cap.show', 'Show places left'], n1: ['nt.1.t', 'Early Bird sold out'], n2: ['nt.2.t', 'Transport from Turin'], cap: ['cap.total', 'Places in total'], full: ['cap.full', 'When the camp is full'], opens: ['door.opensat', 'Opens at'], msg: ['door.msg', 'Message on the site'] };
+  const fmtVal = (k, v) => k === 'door' ? LABEL.door(v) : typeof v === 'boolean' ? LABEL.on(v) : k === 'full' ? (v === 'wait' ? R.t('cap.full.wait', 'New people go on the waitlist') : R.t('cap.full.close', 'Close the form')) : k === 'opens' ? R.fmtDate(v, 'long') : String(v).length > 34 ? String(v).slice(0, 34) + '…' : String(v);
+  const changes = () => Object.keys(draft).filter((k) => draft[k] !== published[k]);
+
+  function renderPhone() {
+    const d = draft.door;
+    const spots = draft.showspots ? `<div class="pw-spots"><b>22</b> ${esc(R.t('pw.left', 'places left'))}</div>` : '';
+    const notices = [draft.n1 && ['warn', R.t('nt.1.t', 'Early Bird sold out')], draft.n2 && ['info', R.t('nt.2.t', 'Transport from Turin')]].filter(Boolean)
+      .map(([t, s]) => `<div class="pw-notice pw-notice--${t}">${esc(s)}</div>`).join('');
+    let body;
+    if (d === 'open') {
+      body = `${R.PACKAGES.map((p) => { const st = pkState(p); const dis = st !== 'live'; return `<div class="pw-pk${dis ? ' is-off' : ''}"><span class="pw-radio"></span><span class="grow"><b>${esc(p.name)}</b><small>${dis ? esc(st === 'soldout' ? R.t('pw.wl', 'Sold out · join the waitlist') : R.t('pw.closed', 'Not available')) : esc(R.t(p.k, p.desc))}</small></span><span class="num">${R.money(p.price)}</span></div>`; }).join('')}
+        <div class="pw-field"></div><div class="pw-field"></div><div class="pw-btn">${esc(R.t('pub.send', 'Send registration'))}</div>`;
+    } else if (d === 'countdown') {
+      body = `<div class="pw-count">${['02', '14', '37'].map((n, i) => `<span><b>${n}</b><small>${esc([R.t('u.d', 'days'), R.t('u.h', 'hours'), R.t('u.m', 'min')][i])}</small></span>`).join('')}</div><p class="pw-msg">${esc(R.t('pw.opens', 'Opens {d}', { d: R.fmtDate(draft.opens, 'long') }))}</p>`;
+    } else {
+      body = `<div class="pw-state pw-state--${d}">${R.icon(d === 'paused' ? 'pause' : 'lock', 'i--lg')}<b>${esc(d === 'paused' ? R.t('pw.paused', 'Registrations are paused') : R.t('pw.closedt', 'Registrations are closed'))}</b><p>${esc(draft.msg)}</p>${d === 'paused' ? `<div class="pw-btn pw-btn--ghost">${esc(R.t('pw.join', 'Join the waitlist'))}</div>` : ''}</div>`;
+    }
+    $('#phone').innerHTML = `<div class="pw-top"><span class="pw-dot"></span>Restart Camp 2027</div><h3 class="pw-title">${esc(R.t('pw.title', 'Register'))}</h3>${spots}${notices}${body}`;
+  }
+  function sync() {
+    $$('[data-show]').forEach((el) => { el.hidden = !el.dataset.show.split(' ').includes(draft.door); });
+    $('#door-extra').hidden = draft.door === 'open';
+    renderPackages(); renderPhone();
+    const n = changes().length;
+    $('#pubbar').classList.toggle('is-on', n > 0);
+    $('#pub-n').textContent = R.t(n === 1 ? 'pub.n1x' : 'pub.n', n === 1 ? '1 unpublished change' : '{n} unpublished changes', { n });
+    $('#prev-badge').textContent = n ? R.t('prev.draft', 'Draft') : R.t('prev.published', 'Published');
+    $('#prev-badge').className = 'chip ' + (n ? 'chip--accent' : 'chip--plain');
+  }
+  document.addEventListener('change', (e) => {
+    const t = e.target;
+    if (t.name === 'door') draft.door = t.value;
+    else if (t.dataset.pk) draft[t.dataset.pk] = t.checked;
+    else if (t.dataset.draft) draft[t.dataset.draft] = t.type === 'checkbox' ? t.checked : t.value;
+    sync();
+  });
+  document.addEventListener('input', (e) => { if (e.target.dataset.draft && e.target.tagName === 'TEXTAREA') { draft[e.target.dataset.draft] = e.target.value; sync(); } });
+  $('#discard').addEventListener('click', () => {
+    Object.assign(draft, published);
+    $$('input[name="door"]').forEach((r) => (r.checked = r.value === draft.door));
+    $$('[data-draft]').forEach((el) => { const v = draft[el.dataset.draft]; if (el.type === 'checkbox') el.checked = v; else el.value = v; });
+    sync(); R.toast(R.t('toast.discarded', 'Draft discarded'));
+  });
+  $('#review').addEventListener('click', () => {
+    $('#diff').innerHTML = changes().map((k) => `<div class="diff__row"><span>${esc(NAMES[k][0] ? R.t(NAMES[k][0], NAMES[k][1]) : NAMES[k][1])}</span><span class="diff__change"><span class="diff__from">${esc(fmtVal(k, published[k]))}</span>${R.icon('arrowr', 'i--sm')}<b>${esc(fmtVal(k, draft[k]))}</b></span></div>`).join('');
+    $('#pub-warn').hidden = !(draft.door === 'closed' || draft.door === 'paused') || published.door === draft.door;
+    R.openModal('m-pub');
+  });
+  $('#publish').addEventListener('click', () => { Object.assign(published, draft); R.closeModal(); sync(); R.toast(R.t('toast.published', 'Published · the site is up to date')); });
+  document.addEventListener('muster:lang', sync);
+  sync();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Muster · design preview</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/tokens.css?v=6">
+<link rel="stylesheet" href="css/ui.css?v=6">
+<link rel="stylesheet" href="css/pages.css?v=6">
+</head>
+<body>
+<header class="public__bar" style="max-width:var(--content-max)">
+  <a class="brand" href="index.html"><span class="brand__mark" data-mark></span><span class="brand__name">Muster</span></a>
+  <span class="grow"></span><span data-lang-slot></span>
+  <button type="button" class="btn btn--ghost btn--icon btn--sm" data-theme-toggle aria-label="Theme"><span data-icon="moon"></span></button>
+</header>
+<main class="page" id="main">
+  <header class="page-head">
+    <div>
+      <span class="chip chip--accent" style="margin-bottom:12px" data-i18n="hub.chip">Design preview · v1</span>
+      <h1 class="page-head__title" data-i18n="hub.title">Registrations for camps and events, done calmly</h1>
+      <p class="page-head__lead" data-i18n="hub.lead">Muster is a free, self-hosted registration module: a public form, a back office and the emails in between. This preview shows every screen, in English, Italian and Romanian, on desktop and phone.</p>
+    </div>
+    <div class="page-head__actions"><a class="btn btn--primary" href="login.html"><span data-i18n="hub.start">Start from sign in</span><span data-icon="arrowr" data-icon-class="i--sm"></span></a></div>
+  </header>
+
+  <section class="section">
+    <div class="section__head"><h2 class="section__title" data-i18n="hub.flows">Flows</h2></div>
+    <div class="grid-3">
+      <div class="card card--pad stack stack--sm"><b data-i18n="hub.f1">Visitor</b><div class="flow small muted"><a href="public.html" data-i18n="hub.f1a">Form in 4 steps</a><span data-icon="chevr" data-icon-class="i--sm"></span><span data-i18n="em.t1">Registration received</span><span data-icon="chevr" data-icon-class="i--sm"></span><span data-i18n="em.t3">Payment details</span><span data-icon="chevr" data-icon-class="i--sm"></span><span data-i18n="st.secured">Place secured</span></div></div>
+      <div class="card card--pad stack stack--sm"><b data-i18n="hub.f2">Organiser</b><div class="flow small muted"><a href="overview.html" data-i18n="ov.needs">Needs you</a><span data-icon="chevr" data-icon-class="i--sm"></span><a href="registrations.html#r6" data-i18n="hub.f2a">Open a person</a><span data-icon="chevr" data-icon-class="i--sm"></span><span data-i18n="ns.received.b">Send details</span><span data-icon="chevr" data-icon-class="i--sm"></span><span data-i18n="ns.rec">Record payment</span></div></div>
+      <div class="card card--pad stack stack--sm"><b data-i18n="hub.f3">Going live</b><div class="flow small muted"><a href="live.html" data-i18n="hub.f3a">Change a package</a><span data-icon="chevr" data-icon-class="i--sm"></span><span data-i18n="prev.draft">Draft</span><span data-icon="chevr" data-icon-class="i--sm"></span><span data-i18n="pub.review">Review &amp; publish</span><span data-icon="chevr" data-icon-class="i--sm"></span><span data-i18n="activity.short">Activity log</span></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section__head"><h2 class="section__title" data-i18n="hub.screens">Screens</h2></div>
+    <div class="cards" id="screens"></div>
+  </section>
+</main>
+<script src="js/i18n.js?v=6"></script>
+<script src="js/muster.js?v=6"></script>
+<script>
+document.addEventListener('muster:ready', () => {
+  const R = Muster, esc = R.esc;
+  R.$$('[data-mark]').forEach((el) => (el.innerHTML = R.mark));
+  R.$('[data-lang-slot]').innerHTML = R.langSwitch(); R.applyI18n(R.$('[data-lang-slot]'));
+  const S = [
+    ['login.html', 'key', 'auth.title', 'Sign in', 'hub.s.login', 'Email, then a one-time code. No passwords.'],
+    ['overview.html', 'home', 'nav.overview', 'Overview', 'hub.s.ov', 'Numbers that matter and the queue that needs you.'],
+    ['registrations.html', 'users', 'nav.registrations', 'Registrations', 'hub.s.reg', 'Table or board, filters, and each person as a page.'],
+    ['live.html', 'live', 'live.title', 'Live on site', 'hub.s.live', 'Form mode, packages, places, notices. Draft, review, publish.'],
+    ['form-builder.html', 'form', 'nav.form', 'Form & consents', 'hub.s.form', 'Fields, text blocks, consents and the embed line.'],
+    ['offer.html', 'tag', 'nav.offer', 'Event & pricing', 'hub.s.offer', 'Ages, packages, sales windows, deposit and Revolut.'],
+    ['emails.html', 'mail', 'nav.emails', 'Emails', 'hub.s.em', 'Eight templates with live preview on desktop and phone.'],
+    ['lists.html', 'list', 'nav.lists', 'Lists', 'hub.s.ls', 'T-shirts, allergies, transport, minors, rooms, money.'],
+    ['activity.html', 'history', 'nav.activity', 'Activity', 'hub.s.ac', 'Append-only log of every change and email.'],
+    ['team.html', 'shield', 'nav.team', 'Team', 'hub.s.tm', 'Owners, organisers, read-only. Invites and alerts.'],
+    ['public.html', 'globe', 'hub.s.pub.t', 'Public form', 'hub.s.pub', 'Open, waitlist, countdown, paused, closed, sent.'],
+    ['brand.html', 'swatch', 'br.chip', 'Brand guidelines', 'hub.s.br', 'Principles, colour, type, components, voice.'],
+    ['logo.html', 'sparkle', 'lg.chip', 'Logo', 'hub.s.logo', 'The mark, its construction, versions and sizes.'],
+  ];
+  function render() {
+    R.$('#screens').innerHTML = S.map(([h, ic, k, en, sk, s]) => `<a class="card card--hover hub-card" href="${h}"><span class="hub-card__icon">${R.icon(ic)}</span><span class="hub-card__title">${esc(R.t(k, en))}</span><span class="hub-card__text">${esc(R.t(sk, s))}</span></a>`).join('');
+  }
+  document.addEventListener('muster:lang', render);
+  render();
+});
+</script>
+</body>
+</html>

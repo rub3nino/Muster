@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Brand · Muster</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/tokens.css?v=6">
+<link rel="stylesheet" href="css/ui.css?v=6">
+<link rel="stylesheet" href="css/pages.css?v=6">
+</head>
+<body>
+<header class="public__bar" style="max-width:var(--content-max)">
+  <a class="brand" href="index.html"><span class="brand__mark" data-mark></span><span class="brand__name">Muster</span></a>
+  <span class="chip chip--plain" data-i18n="br.chip">Brand guidelines</span><a class="btn btn--sm btn--ghost" href="logo.html" data-i18n="lg.chip">Logo</a>
+  <span class="grow"></span><span data-lang-slot></span>
+  <button type="button" class="btn btn--ghost btn--icon btn--sm" data-theme-toggle aria-label="Theme"><span data-icon="moon"></span></button>
+</header>
+<main class="page" id="main">
+  <header class="page-head">
+    <div>
+      <h1 class="page-head__title" data-i18n="br.title">Calm, exact, on your side</h1>
+      <p class="page-head__lead" data-i18n="br.lead">Muster is the back office of an event that matters to people. It should feel like a quiet notebook, not a dashboard shouting numbers. Grey canvas, white sheets, one dark ink, one violet for “you are here”.</p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="section__head"><h2 class="section__title" data-i18n="br.principles">Principles</h2></div>
+    <div class="grid-3">
+      <div class="card principle"><span class="principle__n">01</span><b data-i18n="br.p1">One next step</b><p data-i18n="br.p1s">Every registration shows the single action that moves it forward. Everything else is one click away, never in the way.</p></div>
+      <div class="card principle"><span class="principle__n">02</span><b data-i18n="br.p2">Nothing goes live by accident</b><p data-i18n="br.p2s">What visitors see is drafted, reviewed as a list of changes, then published. Destructive actions always ask, and say what happens next.</p></div>
+      <div class="card principle"><span class="principle__n">03</span><b data-i18n="br.p3">Colour means something</b><p data-i18n="br.p3s">Violet is selection and focus only. Green, amber, red and blue live inside chips and callouts, never as decoration.</p></div>
+      <div class="card principle"><span class="principle__n">04</span><b data-i18n="br.p4">Phone first, for real</b><p data-i18n="br.p4s">Organisers work from a phone at the check-in desk. Tables turn into cards, drawers into sheets, targets are 44 px.</p></div>
+      <div class="card principle"><span class="principle__n">05</span><b data-i18n="br.p5">Three languages, same tone</b><p data-i18n="br.p5s">English, Italian and Romanian. Short sentences, verbs on buttons, no jargon. Dates in Italian time, always.</p></div>
+      <div class="card principle"><span class="principle__n">06</span><b data-i18n="br.p6">Private by default</b><p data-i18n="br.p6s">Health and faith data are labelled where they appear, never in logs, never in read-only exports.</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section__head"><h2 class="section__title" data-i18n="br.colour">Colour</h2><p class="section__lead" data-i18n="br.colour.s">Tokens in css/tokens.css. Dark mode redefines the same names.</p></div>
+    <div class="swatches" id="sw"></div>
+  </section>
+
+  <section class="section">
+    <div class="section__head"><h2 class="section__title" data-i18n="br.type">Type</h2><p class="section__lead" data-i18n="br.type.s">System sans (SF Pro on Apple, Segoe on Windows, Roboto on Android). No web font to load, no layout shift.</p></div>
+    <div class="card card--pad">
+      <div class="typerow"><span class="small muted">Display · 36/40 · 600</span><span style="font:var(--t-display);letter-spacing:var(--track-tight)">Registrations</span></div>
+      <div class="typerow"><span class="small muted">Heading · 20 · 600</span><span style="font:var(--t-h2)">Packages</span></div>
+      <div class="typerow"><span class="small muted">Title · 15 · 600</span><span style="font:var(--t-h3)">Needs you</span></div>
+      <div class="typerow"><span class="small muted">Body · 15/1.55</span><span>Everyone who sent the form, in arrival order.</span></div>
+      <div class="typerow"><span class="small muted">Small · 13</span><span class="small muted">Starts when the payment email is delivered.</span></div>
+      <div class="typerow"><span class="small muted">Numbers · tabular</span><span class="num" style="font:600 28px/1 var(--font-display)">98 / 120 · 11 870 €</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section__head"><h2 class="section__title" data-i18n="br.comp">Components</h2></div>
+    <div class="stack">
+      <div class="specimen"><button class="btn btn--primary" type="button">Primary</button><button class="btn" type="button">Secondary</button><button class="btn btn--ghost" type="button">Ghost</button><button class="btn btn--accent" type="button">Accent</button><button class="btn btn--danger" type="button">Danger</button><button class="btn btn--sm" type="button">Small</button><button class="btn btn--primary btn--lg" type="button">Large</button></div>
+      <div class="specimen" id="chips"></div>
+      <div class="specimen"><div class="seg" data-seg role="group"><button class="seg__item" type="button" aria-pressed="true"><span data-icon="zap"></span>Active</button><button class="seg__item" type="button" aria-pressed="false"><span data-icon="clock"></span>Waitlist</button><button class="seg__item" type="button" aria-pressed="false"><span data-icon="x"></span>Cancelled</button></div>
+        <span class="tag">Web form</span><span class="tag">Revolut</span><label class="switch"><input type="checkbox" checked><span class="switch__track"></span>Switch</label></div>
+      <div class="specimen" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
+        <div class="callout callout--info"><span data-icon="info"></span><div class="callout__body">Info callout</div></div>
+        <div class="callout callout--ok"><span data-icon="checkc"></span><div class="callout__body">Success callout</div></div>
+        <div class="callout callout--warn"><span data-icon="alert"></span><div class="callout__body">Attention callout</div></div>
+        <div class="callout callout--bad"><span data-icon="alert"></span><div class="callout__body">Error callout</div></div>
+      </div>
+      <div class="specimen" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
+        <label class="field"><span class="field__label">Input</span><input class="input" placeholder="Placeholder"></label>
+        <label class="field"><span class="field__label">Select</span><select class="select"><option>Standard · 150 €</option></select></label>
+        <label class="field"><span class="field__label">Invalid</span><input class="input" aria-invalid="true" value="ana@"><span class="field__error"><span data-icon="alert" data-icon-class="i--sm"></span>Enter a valid email address.</span></label>
+      </div>
+      <div class="specimen" id="icons" style="gap:18px"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section__head"><h2 class="section__title" data-i18n="br.voice">Voice</h2></div>
+    <div class="table-wrap"><table class="table table--cards">
+      <thead><tr><th data-i18n="br.do">Write</th><th data-i18n="br.dont">Not</th></tr></thead>
+      <tbody>
+        <tr><td class="cell-main">Send payment details</td><td data-label="Not">Confirm</td></tr>
+        <tr><td class="cell-main">Deadline passed · check Revolut or free the place</td><td data-label="Not">Error: payment timeout</td></tr>
+        <tr><td class="cell-main">Nothing to pay yet.</td><td data-label="Not">Payment pending (status code 2)</td></tr>
+        <tr><td class="cell-main">Invia i dati di pagamento · Trimite datele de plată</td><td data-label="Not">Conferma · Confirmă</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+</main>
+<script src="js/i18n.js?v=6"></script>
+<script src="js/muster.js?v=6"></script>
+<script>
+document.addEventListener('muster:ready', () => {
+  const R = Muster, esc = R.esc;
+  R.$$('[data-mark]').forEach((el) => (el.innerHTML = R.mark));
+  R.$('[data-lang-slot]').innerHTML = R.langSwitch(); R.applyI18n(R.$('[data-lang-slot]'));
+  const S = [['--canvas', 'Canvas'], ['--canvas-2', 'Frame'], ['--surface', 'Surface'], ['--surface-sunk', 'Sunk'], ['--line', 'Line'], ['--ink', 'Ink'], ['--ink-2', 'Ink 2'], ['--ink-3', 'Ink 3'], ['--btn-primary', 'Primary'], ['--accent', 'Accent'], ['--accent-soft', 'Accent soft'], ['--ok', 'Success'], ['--warn', 'Attention'], ['--bad', 'Error'], ['--info', 'Info']];
+  function sw() {
+    const cs = getComputedStyle(document.documentElement);
+    R.$('#sw').innerHTML = S.map(([v, n]) => `<div class="swatch"><div class="swatch__color" style="background:var(${v})"></div><div class="swatch__meta"><b>${n}</b><code>${v}</code><code>${cs.getPropertyValue(v).trim()}</code></div></div>`).join('');
+  }
+  sw(); new MutationObserver(sw).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  R.$('#chips').innerHTML = Object.keys(R.STATUS || {}).length ? '' : '';
+  R.$('#chips').innerHTML = ['chip--info:Received', 'chip--warn:Waitlist', 'chip--accent:Awaiting deposit', 'chip--ok:Place secured', 'chip--ok chip--live:Live', 'chip--bad:Cancelled', 'chip--plain:Neutral'].map((s) => { const [c, l] = s.split(':'); return `<span class="chip ${c}">${l}</span>`; }).join('');
+  R.$('#icons').innerHTML = ['home', 'users', 'live', 'form', 'tag', 'mail', 'list', 'history', 'shield', 'wallet', 'euro', 'zap', 'clock', 'timer', 'hourglass', 'megaphone', 'calendar', 'pin', 'cake', 'shirt', 'car', 'heart', 'bed', 'church', 'send', 'copy', 'download', 'edit', 'trash', 'eye', 'lock', 'pause'].map((n) => `<span title="${n}" style="color:var(--ink-2)">${R.icon(n, 'i--lg')}</span>`).join('');
+});
+</script>
+</body>
+</html>

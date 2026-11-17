@@ -1,0 +1,141 @@
+/* =========================================================
+   Muster — design tokens
+   One source for colour, type, space, radius, shadow and motion.
+   Light is the default; dark follows the OS unless the page sets
+   <html data-theme="light|dark">.
+
+   Visual roles (read these before adding a colour):
+   · canvas   — the grey the app sits on
+   · surface  — white sheets: cards, tables, drawers, inputs
+   · ink      — text and the primary button (one dark, never pure black)
+   · accent   — violet, ONLY for "you are here", selection, focus, links
+   · status   — green / amber / red / blue, ONLY inside chips, dots, callouts
+   ========================================================= */
+
+:root {
+  color-scheme: light;
+
+  /* ---- canvas & surfaces ---- */
+  --canvas:        #F2F2F1;
+  --canvas-2:      #F7F7F6;   /* app frame, sidebar */
+  --surface:       #FFFFFF;
+  --surface-2:     #FAFAF9;   /* table header, hover */
+  --surface-sunk:  #ECECEA;   /* segmented track, code */
+  --overlay:       rgba(20, 20, 24, .32);
+
+  /* ---- lines ---- */
+  --line:          #E7E7E4;
+  --line-strong:   #D8D8D4;
+  --line-dashed:   #DCDCD8;
+
+  /* ---- ink ---- */
+  --ink:           #2C2C30;   /* body + headings */
+  --ink-2:         #6B6B72;   /* secondary text, labels */
+  --ink-3:         #9C9CA3;   /* placeholders, meta, disabled */
+  --ink-inverse:   #FFFFFF;
+  --btn-primary:   #232327;
+  --btn-primary-h: #000000;
+
+  /* ---- accent (violet) ---- */
+  --accent:        #5B4BDB;
+  --accent-ink:    #4A3BC4;
+  --accent-soft:   #ECEAFD;
+  --accent-soft-2: #E2DEFB;
+  --focus:         0 0 0 3px rgba(91, 75, 219, .28);
+
+  /* ---- status ---- */
+  --ok:            #2E9F4B;  --ok-soft:     #E5F6E7;  --ok-line:     #BFE5C6;
+  --warn:          #B4730E;  --warn-soft:   #FCF1DD;  --warn-line:   #F0D7A6;
+  --bad:           #D2433A;  --bad-soft:    #FDECEA;  --bad-line:    #F5C2BD;
+  --info:          #2F6FD6;  --info-soft:   #E8F0FD;  --info-line:   #C3D6F6;
+  --neutral-soft:  #EFEFED;
+  --dot-live:      #34C759;
+  --dot-alert:     #F0503C;
+
+  /* ---- type ---- */
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --t-display: 600 clamp(28px, 4vw, 36px)/1.12 var(--font-display);
+  --t-h2:      600 20px/1.3 var(--font-display);
+  --t-h3:      600 15px/1.35 var(--font);
+  --t-body:    400 15px/1.55 var(--font);
+  --t-ui:      500 14.5px/1.35 var(--font);
+  --t-small:   400 13px/1.45 var(--font);
+  --t-label:   500 13px/1.3 var(--font);
+  --t-micro:   600 11px/1.2 var(--font);
+  --track-tight: -0.02em;
+
+  /* ---- space (4px grid) ---- */
+  --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px; --s5: 20px;
+  --s6: 24px; --s7: 32px; --s8: 40px; --s9: 56px; --s10: 72px;
+  --gutter: 16px;
+
+  /* ---- radius ---- */
+  --r-xs: 6px;  --r-sm: 8px;  --r-md: 10px; --r-lg: 14px;
+  --r-xl: 20px; --r-2xl: 28px; --r-pill: 999px;
+
+  /* ---- shadow ---- */
+  --sh-1: 0 1px 2px rgba(17, 17, 26, .05);
+  --sh-2: 0 1px 2px rgba(17, 17, 26, .04), 0 6px 20px rgba(17, 17, 26, .05);
+  --sh-3: 0 2px 6px rgba(17, 17, 26, .06), 0 18px 48px rgba(17, 17, 26, .12);
+  --sh-seg: 0 1px 2px rgba(17, 17, 26, .08), 0 1px 1px rgba(17, 17, 26, .04);
+
+  /* ---- motion ---- */
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --d-fast: 120ms; --d: 200ms; --d-slow: 320ms;
+
+  /* ---- layout ---- */
+  --sidebar-w: 264px;
+  --content-max: 1180px;
+  --drawer-w: 520px;
+  --topbar-h: 56px;
+}
+
+/* ---- dark: OS preference, unless the page forces light ---- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --canvas: #0F0F11; --canvas-2: #141416; --surface: #1B1B1F; --surface-2: #202025; --surface-sunk: #26262B;
+    --overlay: rgba(0, 0, 0, .55);
+    --line: #2A2A30; --line-strong: #36363D; --line-dashed: #34343A;
+    --ink: #ECECEF; --ink-2: #A4A4AD; --ink-3: #74747D; --ink-inverse: #111113;
+    --btn-primary: #F1F1F3; --btn-primary-h: #FFFFFF;
+    --accent: #8C80F7; --accent-ink: #A69CFA; --accent-soft: rgba(140, 128, 247, .16); --accent-soft-2: rgba(140, 128, 247, .24);
+    --focus: 0 0 0 3px rgba(140, 128, 247, .38);
+    --ok: #4CC46B; --ok-soft: rgba(76, 196, 107, .14); --ok-line: rgba(76, 196, 107, .32);
+    --warn: #E3A23B; --warn-soft: rgba(227, 162, 59, .14); --warn-line: rgba(227, 162, 59, .32);
+    --bad: #F26B61; --bad-soft: rgba(242, 107, 97, .14); --bad-line: rgba(242, 107, 97, .32);
+    --info: #6EA0F2; --info-soft: rgba(110, 160, 242, .14); --info-line: rgba(110, 160, 242, .32);
+    --neutral-soft: #26262B;
+    --sh-1: 0 1px 2px rgba(0, 0, 0, .4);
+    --sh-2: 0 1px 2px rgba(0, 0, 0, .35), 0 8px 24px rgba(0, 0, 0, .3);
+    --sh-3: 0 2px 8px rgba(0, 0, 0, .4), 0 24px 60px rgba(0, 0, 0, .5);
+    --sh-seg: 0 1px 2px rgba(0, 0, 0, .5);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --canvas: #0F0F11; --canvas-2: #141416; --surface: #1B1B1F; --surface-2: #202025; --surface-sunk: #26262B;
+  --overlay: rgba(0, 0, 0, .55);
+  --line: #2A2A30; --line-strong: #36363D; --line-dashed: #34343A;
+  --ink: #ECECEF; --ink-2: #A4A4AD; --ink-3: #74747D; --ink-inverse: #111113;
+  --btn-primary: #F1F1F3; --btn-primary-h: #FFFFFF;
+  --accent: #8C80F7; --accent-ink: #A69CFA; --accent-soft: rgba(140, 128, 247, .16); --accent-soft-2: rgba(140, 128, 247, .24);
+  --focus: 0 0 0 3px rgba(140, 128, 247, .38);
+  --ok: #4CC46B; --ok-soft: rgba(76, 196, 107, .14); --ok-line: rgba(76, 196, 107, .32);
+  --warn: #E3A23B; --warn-soft: rgba(227, 162, 59, .14); --warn-line: rgba(227, 162, 59, .32);
+  --bad: #F26B61; --bad-soft: rgba(242, 107, 97, .14); --bad-line: rgba(242, 107, 97, .32);
+  --info: #6EA0F2; --info-soft: rgba(110, 160, 242, .14); --info-line: rgba(110, 160, 242, .32);
+  --neutral-soft: #26262B;
+  --sh-1: 0 1px 2px rgba(0, 0, 0, .4);
+  --sh-2: 0 1px 2px rgba(0, 0, 0, .35), 0 8px 24px rgba(0, 0, 0, .3);
+  --sh-3: 0 2px 8px rgba(0, 0, 0, .4), 0 24px 60px rgba(0, 0, 0, .5);
+  --sh-seg: 0 1px 2px rgba(0, 0, 0, .5);
+}
+
+@media (max-width: 720px) {
+  :root { --gutter: 16px; --drawer-w: 100vw; }
+}

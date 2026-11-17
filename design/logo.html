@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Logo · Muster</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/tokens.css?v=6">
+<link rel="stylesheet" href="css/ui.css?v=6">
+<link rel="stylesheet" href="css/pages.css?v=6">
+<style>
+  .lg-hero { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: var(--s6); align-items: center; }
+  @media (max-width: 860px) { .lg-hero { grid-template-columns: 1fr; } }
+  .lg-stage { display: grid; place-items: center; min-height: 320px; border-radius: var(--r-2xl); background: var(--canvas-2); border: 1px solid var(--line); position: relative; overflow: hidden; }
+  .lg-stage::after { content: ""; position: absolute; inset: 0; opacity: .55; background-image: radial-gradient(var(--line-strong) 1px, transparent 1.3px); background-size: 14px 14px; -webkit-mask-image: radial-gradient(circle at 50% 50%, transparent 30%, #000 80%); mask-image: radial-gradient(circle at 50% 50%, transparent 30%, #000 80%); pointer-events: none; }
+  .lockup { display: inline-flex; align-items: center; gap: .36em; font: 600 56px/1 var(--font-display); letter-spacing: -0.025em; color: var(--ink); position: relative; z-index: 1; }
+  .tile { display: grid; place-items: center; border-radius: 28%; background: var(--btn-primary); color: var(--ink-inverse); flex: 0 0 auto; }
+  .tile svg { width: 66%; height: 66%; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+  .tile--violet { background: var(--accent); color: #fff; }
+  .tile--paper { background: #fff; color: #232327; box-shadow: inset 0 0 0 1px #E2E2DE; }
+  .tile--ink { background: #232327; color: #fff; }
+  .glyph svg { fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+  .lg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)); gap: var(--s4); }
+  .lg-cell { display: flex; flex-direction: column; gap: var(--s3); }
+  .lg-cell__art { display: grid; place-items: center; min-height: 170px; border-radius: var(--r-xl); border: 1px solid var(--line); }
+  .lg-cell__art--canvas { background: var(--canvas-2); }
+  .lg-cell__art--dark { background: #141416; border-color: #141416; }
+  .lg-cell__art--violet { background: #5B4BDB; border-color: #5B4BDB; }
+  .lg-cell__art--paper { background: #FBFBFA; border-color: #E7E7E4; }
+  .lg-cell b { font: var(--t-ui); }
+  .lg-cell p { font: var(--t-small); color: var(--ink-2); }
+  .sizes { display: flex; align-items: flex-end; gap: var(--s6); flex-wrap: wrap; padding: var(--s6); }
+  .sizes figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .sizes figcaption { font: 500 12px/1 var(--mono); color: var(--ink-3); }
+  .construct { width: 100%; max-width: 360px; aspect-ratio: 1; }
+  .dont { position: relative; }
+  .dont .lg-cell__art { overflow: hidden; }
+  .dont .x { position: absolute; top: 10px; right: 10px; width: 24px; height: 24px; border-radius: 50%; background: var(--bad); color: #fff; display: grid; place-items: center; }
+  .dont .x .i { width: 14px; height: 14px; stroke-width: 2.6; }
+  .files { display: flex; flex-direction: column; }
+  .files code { background: none; padding: 0; }
+</style>
+</head>
+<body>
+<header class="public__bar" style="max-width:var(--content-max)">
+  <a class="brand" href="index.html"><span class="brand__mark" data-mark></span><span class="brand__name">Muster</span></a>
+  <span class="chip chip--plain" data-i18n="lg.chip">Logo</span>
+  <span class="grow"></span><span data-lang-slot></span>
+  <button type="button" class="btn btn--ghost btn--icon btn--sm" data-theme-toggle aria-label="Theme"><span data-icon="moon"></span></button>
+</header>
+
+<main class="page" id="main">
+  <section class="lg-hero">
+    <div class="stack">
+      <span class="micro" data-i18n="lg.eyebrow">The mark</span>
+      <h1 class="page-head__title" data-i18n="lg.title">An M that ends in a check</h1>
+      <p class="muted" data-i18n="lg.p1">To muster is to call people together and count who is there. The mark draws the first letter and, where the last stroke of the M should fall, puts the tick you write next to a name at roll call: here, present, place secured.</p>
+      <p class="muted" data-i18n="lg.p2">It is drawn with the same rounded 2.4 stroke as the interface icons, so it sits in the sidebar like it belongs there, and it stays readable down to a 16 px browser tab.</p>
+      <div class="row row--wrap" style="margin-top:6px"><span class="tag" data-i18n="lg.t1">Roll call</span><span class="tag" data-i18n="lg.t2">Present ✓</span><span class="tag" data-i18n="lg.t3">One stroke weight</span></div>
+    </div>
+    <div class="lg-stage">
+      <span class="lockup"><span class="tile" style="width:1.35em;height:1.35em" data-glyph data-w="2.4"></span>Muster</span>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section__head"><div><h2 class="section__title" data-i18n="lg.cons">Construction</h2><p class="section__lead" data-i18n="lg.cons.s">32-unit grid, 9-unit corner radius, 2.4 stroke with round caps and joins. The two parts share the baseline on the right.</p></div></div>
+    <div class="card card--pad" style="display:grid;grid-template-columns:minmax(0,360px) minmax(0,1fr);gap:24px;align-items:center" id="cons-wrap">
+      <svg class="construct" viewBox="0 0 32 32" role="img" aria-label="Construction grid">
+        <rect width="32" height="32" rx="9" fill="var(--btn-primary)"/>
+        <g stroke="var(--ink-inverse)" stroke-opacity=".14" stroke-width=".06">
+          <path d="M0 4h32M0 8h32M0 12h32M0 16h32M0 20h32M0 24h32M0 28h32M4 0v32M8 0v32M12 0v32M16 0v32M20 0v32M24 0v32M28 0v32"/>
+        </g>
+        <g fill="none" stroke="#8C80F7" stroke-width=".09" stroke-dasharray=".4 .3"><path d="M0 9.5h32M0 22.5h32M8 0v32M24.2 0v32"/><circle cx="16" cy="16" r="11.5"/></g>
+        <g fill="none" stroke="var(--ink-inverse)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22.5V9.5l5.5 6.5 5.5-6.5"/><path d="m16 19.5 2.7 2.7 5.3-6.2"/></g>
+        <g fill="#8C80F7"><circle cx="8" cy="22.5" r=".45"/><circle cx="8" cy="9.5" r=".45"/><circle cx="13.5" cy="16" r=".45"/><circle cx="19" cy="9.5" r=".45"/><circle cx="16" cy="19.5" r=".45"/><circle cx="18.7" cy="22.2" r=".45"/><circle cx="24" cy="16" r=".45"/></g>
+      </svg>
+      <dl class="props" style="align-self:center">
+        <dt data-i18n="lg.k1">Grid</dt><dd>32 × 32</dd>
+        <dt data-i18n="lg.k2">Corner radius</dt><dd>9 (28%)</dd>
+        <dt data-i18n="lg.k3">Stroke</dt><dd>2.4 · round</dd>
+        <dt data-i18n="lg.k4">Cap height</dt><dd>9.5 → 22.5</dd>
+        <dt data-i18n="lg.k5">Optical centre</dt><dd>16, 16</dd>
+        <dt data-i18n="lg.k6">Clear space</dt><dd data-i18n="lg.k6v">half the tile on every side</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section__head"><h2 class="section__title" data-i18n="lg.ver">Versions</h2></div>
+    <div class="lg-grid">
+      <div class="lg-cell"><div class="lg-cell__art lg-cell__art--canvas"><span class="lockup" style="font-size:34px"><span class="tile tile--ink" style="width:1.35em;height:1.35em" data-glyph></span><span style="color:#2C2C30">Muster</span></span></div><b data-i18n="lg.v1">Primary</b><p data-i18n="lg.v1s">Ink tile with wordmark. Use it on the canvas grey or white.</p></div>
+      <div class="lg-cell"><div class="lg-cell__art lg-cell__art--dark"><span class="lockup" style="font-size:34px;color:#ECECEF"><span class="tile tile--paper" style="width:1.35em;height:1.35em" data-glyph></span>Muster</span></div><b data-i18n="lg.v2">On dark</b><p data-i18n="lg.v2s">The tile turns paper white, the glyph stays ink.</p></div>
+      <div class="lg-cell"><div class="lg-cell__art lg-cell__art--violet"><span class="lockup" style="font-size:34px;color:#fff"><span class="tile tile--paper" style="width:1.35em;height:1.35em;color:#5B4BDB" data-glyph></span>Muster</span></div><b data-i18n="lg.v3">On violet</b><p data-i18n="lg.v3s">For the rare launch moment: release notes, social cards.</p></div>
+      <div class="lg-cell"><div class="lg-cell__art lg-cell__art--paper"><span class="glyph" style="color:#232327;display:inline-flex" data-glyph-bare data-size="76"></span></div><b data-i18n="lg.v4">Glyph alone</b><p data-i18n="lg.v4s">No tile, for stamps, emboss, one-colour print.</p></div>
+      <div class="lg-cell"><div class="lg-cell__art lg-cell__art--canvas" style="flex-direction:column;gap:10px;display:flex;align-items:center;justify-content:center"><span class="tile tile--ink" style="width:64px;height:64px" data-glyph></span><span style="font:600 26px/1 var(--font-display);letter-spacing:-.02em;color:var(--ink)">Muster</span></div><b data-i18n="lg.v5">Stacked</b><p data-i18n="lg.v5s">For square spaces: avatars, splash screens.</p></div>
+      <div class="lg-cell"><div class="lg-cell__art lg-cell__art--canvas"><span class="tile tile--violet" style="width:84px;height:84px" data-glyph></span></div><b data-i18n="lg.v6">Accent tile</b><p data-i18n="lg.v6s">Only where the interface already uses violet for “you are here”.</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section__head"><div><h2 class="section__title" data-i18n="lg.sizes">Sizes</h2><p class="section__lead" data-i18n="lg.sizes.s">Below 24 px the stroke thickens to 2.8 so the tick does not disappear.</p></div></div>
+    <div class="card"><div class="sizes" id="sizes"></div></div>
+  </section>
+
+  <section class="section">
+    <div class="section__head"><h2 class="section__title" data-i18n="lg.app">App icon and browser tab</h2></div>
+    <div class="lg-grid">
+      <div class="lg-cell"><div class="lg-cell__art lg-cell__art--canvas"><img src="brand/muster-app-icon.svg" width="120" height="120" alt="Muster app icon" style="border-radius:27px;box-shadow:var(--sh-2)"></div><b data-i18n="lg.a1">Home screen</b><p data-i18n="lg.a1s">1024 px master with a soft top-to-bottom ink gradient.</p></div>
+      <div class="lg-cell"><div class="lg-cell__art lg-cell__art--canvas"><div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--surface);border:1px solid var(--line);border-radius:10px 10px 0 0;box-shadow:var(--sh-1)"><img src="favicon.svg" width="16" height="16" alt=""><span class="small">Muster · Registrations</span><span class="faint" style="margin-left:14px">×</span></div></div><b data-i18n="lg.a2">Favicon</b><p data-i18n="lg.a2s">The ink tile, as SVG: sharp on every screen.</p></div>
+      <div class="lg-cell"><div class="lg-cell__art lg-cell__art--canvas"><div class="card card--pad row" style="gap:12px;max-width:240px"><span class="tile tile--ink" style="width:40px;height:40px" data-glyph></span><span><b style="font-weight:600;display:block">Muster</b><span class="small muted">rub3nino/muster</span></span></div></div><b data-i18n="lg.a3">Repository &amp; social</b><p data-i18n="lg.a3s">Avatar for the GitHub repo and link previews.</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section__head"><h2 class="section__title" data-i18n="lg.dont">Please don’t</h2></div>
+    <div class="lg-grid">
+      <div class="lg-cell dont"><div class="lg-cell__art lg-cell__art--canvas"><span class="tile tile--ink" style="width:110px;height:70px" data-glyph></span></div><span class="x" data-icon="x"></span><p data-i18n="lg.d1">Stretch or squash the tile.</p></div>
+      <div class="lg-cell dont"><div class="lg-cell__art lg-cell__art--canvas"><span class="tile tile--ink" style="width:84px;height:84px;background:linear-gradient(135deg,#ff5f6d,#ffc371)" data-glyph></span></div><span class="x" data-icon="x"></span><p data-i18n="lg.d2">Add gradients or new colours.</p></div>
+      <div class="lg-cell dont"><div class="lg-cell__art lg-cell__art--canvas"><span class="tile tile--ink" style="width:84px;height:84px;transform:rotate(-14deg)" data-glyph></span></div><span class="x" data-icon="x"></span><p data-i18n="lg.d3">Rotate it or tilt it.</p></div>
+      <div class="lg-cell dont"><div class="lg-cell__art lg-cell__art--canvas"><span class="tile tile--ink" style="width:84px;height:84px" data-glyph data-w="1.2"></span></div><span class="x" data-icon="x"></span><p data-i18n="lg.d4">Change the stroke weight.</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section__head"><div><h2 class="section__title" data-i18n="lg.alt">Also explored</h2><p class="section__lead" data-i18n="lg.alt.s">Tally marks: four people counted, the fifth line closes the group. Strong and honest, but at small sizes it reads as “cancelled”, so it stays a secondary motif for print and merch.</p></div></div>
+    <div class="lg-grid">
+      <div class="lg-cell"><div class="lg-cell__art lg-cell__art--canvas"><span class="lockup" style="font-size:34px"><span class="tile tile--ink" style="width:1.35em;height:1.35em" data-tally></span><span style="color:var(--ink)">Muster</span></span></div><b data-i18n="lg.alt.b">Tally · secondary</b></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section__head"><h2 class="section__title" data-i18n="lg.files">Files</h2></div>
+    <div class="rows files">
+      <div class="rowline"><span class="rowline__icon" data-icon="swatch"></span><div class="rowline__text"><div class="rowline__title"><code>brand/muster-mark.svg</code></div><div class="rowline__sub" data-i18n="lg.f1">Ink tile · favicon, avatar</div></div></div>
+      <div class="rowline"><span class="rowline__icon" data-icon="swatch"></span><div class="rowline__text"><div class="rowline__title"><code>brand/muster-mark-light.svg</code> · <code>muster-mark-violet.svg</code></div><div class="rowline__sub" data-i18n="lg.f2">For dark and violet backgrounds</div></div></div>
+      <div class="rowline"><span class="rowline__icon" data-icon="swatch"></span><div class="rowline__text"><div class="rowline__title"><code>brand/muster-glyph.svg</code></div><div class="rowline__sub" data-i18n="lg.f3">Glyph only, uses currentColor</div></div></div>
+      <div class="rowline"><span class="rowline__icon" data-icon="swatch"></span><div class="rowline__text"><div class="rowline__title"><code>brand/muster-logo.svg</code> · <code>muster-app-icon.svg</code></div><div class="rowline__sub" data-i18n="lg.f4">Horizontal lockup · 1024 px app icon</div></div></div>
+    </div>
+  </section>
+</main>
+
+<script src="js/i18n.js?v=6"></script>
+<script src="js/muster.js?v=6"></script>
+<script>
+document.addEventListener('muster:ready', () => {
+  const R = Muster, $$ = R.$$;
+  const G = '<path d="M8 22.5V9.5l5.5 6.5 5.5-6.5"/><path d="m16 19.5 2.7 2.7 5.3-6.2"/>';
+  const T = '<path d="M9.5 9.5v13M13.5 9.5v13M17.5 9.5v13M21.5 9.5v13"/><path d="M7.5 19.5 24 12"/>';
+  $$('[data-mark]').forEach((el) => (el.innerHTML = R.mark));
+  R.$('[data-lang-slot]').innerHTML = R.langSwitch(); R.applyI18n(R.$('[data-lang-slot]'));
+  $$('[data-glyph]').forEach((el) => (el.innerHTML = `<svg viewBox="5.5 7 21 18" style="stroke-width:${el.dataset.w || 2.6}" aria-hidden="true">${G}</svg>`));
+  $$('[data-tally]').forEach((el) => (el.innerHTML = `<svg viewBox="5.5 7 21 18" style="stroke-width:2.4" aria-hidden="true">${T}</svg>`));
+  $$('[data-glyph-bare]').forEach((el) => { const s = el.dataset.size; el.innerHTML = `<svg viewBox="5.5 7 21 18" width="${s}" height="${s * 18 / 21}" style="stroke-width:2.4" aria-hidden="true">${G}</svg>`; });
+  R.$('#sizes').innerHTML = [128, 64, 48, 32, 24, 20, 16].map((s) => `<figure><span class="tile tile--ink" style="width:${s}px;height:${s}px"><svg viewBox="5.5 7 21 18" style="stroke-width:${s < 24 ? 2.8 : 2.4}" aria-hidden="true">${G}</svg></span><figcaption>${s}px</figcaption></figure>`).join('');
+  if (matchMedia('(max-width: 640px)').matches) R.$('#cons-wrap').style.gridTemplateColumns = '1fr';
+});
+</script>
+</body>
+</html>

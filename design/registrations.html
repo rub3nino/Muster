@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Registrations · Muster</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/tokens.css?v=6">
+<link rel="stylesheet" href="css/ui.css?v=6">
+</head>
+<body data-shell data-page="registrations" data-title="Registrations" data-title-key="nav.registrations">
+<div data-content>
+
+  <header class="page-head">
+    <div>
+      <h1 class="page-head__title" data-i18n="reg.title">Registrations</h1>
+      <p class="page-head__lead" data-i18n="reg.lead">Everyone who sent the form, in arrival order. Open a person to take the next step.</p>
+    </div>
+    <div class="page-head__actions">
+      <button class="btn" type="button" data-toast="CSV downloaded" data-toast-key="toast.csv"><span data-icon="download"></span><span data-i18n="act.exportcsv">Export CSV</span></button>
+      <button class="btn btn--primary" type="button" data-modal-open="m-add"><span data-icon="plus"></span><span data-i18n="reg.add">Add manually</span></button>
+    </div>
+  </header>
+
+  <div class="seg" data-seg role="tablist" aria-label="Views" id="views" style="margin-bottom:16px"></div>
+
+  <div class="toolbar">
+    <input class="input input--search" type="search" id="q" placeholder="Search name, email, city, church…" data-i18n-attr="placeholder:reg.search;aria-label:reg.search" aria-label="Search">
+    <button class="filter-btn" type="button" aria-pressed="false" data-f="minor"><span data-icon="user" data-icon-class="i--sm"></span><span data-i18n="f.minors">Minors</span></button>
+    <button class="filter-btn" type="button" aria-pressed="false" data-f="transport"><span data-icon="car" data-icon-class="i--sm"></span><span data-i18n="f.transport">Needs transport</span></button>
+    <button class="filter-btn" type="button" aria-pressed="false" data-f="allergy"><span data-icon="heart" data-icon-class="i--sm"></span><span data-i18n="f.allergy">Allergies</span></button>
+    <div class="grow"></div>
+    <div class="seg" data-seg role="group" aria-label="Layout" id="layout" style="padding:3px">
+      <button type="button" class="seg__item" aria-pressed="true" data-value="table" style="min-height:30px;padding:0 10px"><span data-icon="table" data-icon-class="i--sm"></span><span data-i18n="v.table">Table</span></button>
+      <button type="button" class="seg__item" aria-pressed="false" data-value="board" style="min-height:30px;padding:0 10px"><span data-icon="board" data-icon-class="i--sm"></span><span data-i18n="v.board">Board</span></button>
+    </div>
+  </div>
+  <p class="small faint" id="count" aria-live="polite" style="margin:0 0 10px"></p>
+
+  <div id="table-view">
+    <div class="table-wrap"><div class="table-scroll">
+      <table class="table table--cards">
+        <thead><tr>
+          <th style="width:56px">#</th>
+          <th><span data-icon="user"></span><span data-i18n="col.person">Person</span></th>
+          <th><span data-icon="tag"></span><span data-i18n="col.package">Package</span></th>
+          <th><span data-icon="zap"></span><span data-i18n="col.status">Status</span></th>
+          <th><span data-icon="euro"></span><span data-i18n="col.paid">Paid</span></th>
+          <th><span data-icon="calendar"></span><span data-i18n="col.received">Received</span></th>
+        </tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div></div>
+  </div>
+  <div id="board-view" class="board" hidden></div>
+  <div id="empty" class="empty" hidden>
+    <div class="empty__icon" data-icon="search"></div>
+    <p class="empty__title" data-i18n="empty.title">Nobody matches</p>
+    <p data-i18n="empty.text">Try another view or clear the filters.</p>
+    <button class="btn btn--sm" type="button" id="clear" data-i18n="empty.clear">Clear filters</button>
+  </div>
+</div>
+
+<!-- side peek: one registration, as a page -->
+<aside class="drawer" id="peek" role="dialog" aria-modal="true" aria-labelledby="peek-title"></aside>
+
+<!-- confirm: send payment details (starts the deadline) -->
+<div class="modal" id="m-pay" role="dialog" aria-modal="true" aria-labelledby="m-pay-t">
+  <button class="modal__scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="modal__box">
+    <div class="modal__head"><h2 class="modal__title" id="m-pay-t" data-i18n="mpay.title">Send payment details?</h2></div>
+    <div class="modal__body">
+      <p class="muted" data-i18n="mpay.text">The email with the Revolut link leaves now. The 48-hour deadline starts when it is delivered and does not restart if you resend it.</p>
+      <div class="callout callout--accent"><span data-icon="clock"></span><div class="callout__body"><span class="callout__title" data-i18n="mpay.deadline">Deadline</span><span id="m-pay-due"></span></div></div>
+      <label class="check"><input type="checkbox" checked> <span data-i18n="mpay.copy">Also notify the team when the deadline passes</span></label>
+    </div>
+    <div class="modal__foot">
+      <button class="btn" type="button" data-modal-close data-i18n="act.cancel">Cancel</button>
+      <button class="btn btn--primary" type="button" data-autofocus id="m-pay-ok"><span data-icon="send"></span><span data-i18n="act.send">Send email</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- record a payment -->
+<div class="modal" id="m-rec" role="dialog" aria-modal="true" aria-labelledby="m-rec-t">
+  <button class="modal__scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="modal__box">
+    <div class="modal__head"><h2 class="modal__title" id="m-rec-t" data-i18n="mrec.title">Record a payment</h2></div>
+    <form class="modal__body" id="m-rec-form">
+      <div class="grid-2">
+        <label class="field"><span class="field__label" data-i18n="mrec.amount">Amount</span>
+          <span class="input-group"><input class="input" name="amount" inputmode="decimal" value="50" required data-autofocus><span class="input-group__addon">€</span></span></label>
+        <label class="field"><span class="field__label" data-i18n="mrec.date">Date</span><input class="input" type="date" name="date" id="m-rec-date" required></label>
+      </div>
+      <div class="field"><span class="field__label" data-i18n="mrec.method">Method</span>
+        <div class="seg seg--full" data-seg role="group">
+          <button type="button" class="seg__item" aria-pressed="true" data-value="revolut">Revolut</button>
+          <button type="button" class="seg__item" aria-pressed="false" data-value="cash" data-i18n="pm.cash">Cash</button>
+          <button type="button" class="seg__item" aria-pressed="false" data-value="bank" data-i18n="pm.bank">Bank transfer</button>
+        </div>
+      </div>
+      <label class="field"><span class="field__label"><span data-i18n="mrec.ref">Reference</span> <small data-i18n="opt">optional</small></span><input class="input" name="ref" placeholder="e.g. Revolut note, receipt no." data-i18n-attr="placeholder:mrec.refph"></label>
+      <label class="check"><input type="checkbox" checked> <span data-i18n="mrec.mail">Email the “Place secured” confirmation</span></label>
+    </form>
+    <div class="modal__foot">
+      <button class="btn" type="button" data-modal-close data-i18n="act.cancel">Cancel</button>
+      <button class="btn btn--primary" type="submit" form="m-rec-form" data-i18n="mrec.save">Save payment</button>
+    </div>
+  </div>
+</div>
+
+<!-- cancel -->
+<div class="modal" id="m-cancel" role="dialog" aria-modal="true" aria-labelledby="m-cancel-t">
+  <button class="modal__scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="modal__box">
+    <div class="modal__head"><h2 class="modal__title" id="m-cancel-t" data-i18n="mcan.title">Cancel this registration?</h2></div>
+    <div class="modal__body">
+      <p class="muted" data-i18n="mcan.text">The place goes to the first person on the waitlist. You can restore the registration later; the data stays until you delete it.</p>
+      <label class="field"><span class="field__label" data-i18n="mcan.reason">Reason</span>
+        <select class="select"><option data-i18n="mcan.r1">Asked to cancel</option><option data-i18n="mcan.r2">Deposit not paid in time</option><option data-i18n="mcan.r3">Duplicate</option><option data-i18n="mcan.r4">Other</option></select></label>
+      <label class="check"><input type="checkbox" checked> <span data-i18n="mcan.mail">Email the person</span></label>
+    </div>
+    <div class="modal__foot">
+      <button class="btn" type="button" data-modal-close data-i18n="mcan.keep">Keep it</button>
+      <button class="btn btn--danger-solid" type="button" id="m-cancel-ok" data-i18n="mcan.ok">Cancel registration</button>
+    </div>
+  </div>
+</div>
+
+<!-- add manually -->
+<div class="modal" id="m-add" role="dialog" aria-modal="true" aria-labelledby="m-add-t">
+  <button class="modal__scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="modal__box">
+    <div class="modal__head"><h2 class="modal__title" id="m-add-t" data-i18n="madd.title">Add a registration</h2></div>
+    <div class="modal__body">
+      <p class="muted small" data-i18n="madd.text">For people who signed up by phone. It gets the next number and skips the public limits; consents are marked as given by phone.</p>
+      <div class="grid-2">
+        <label class="field"><span class="field__label" data-i18n="fld.first">First name</span><input class="input" data-autofocus></label>
+        <label class="field"><span class="field__label" data-i18n="fld.last">Last name</span><input class="input"></label>
+        <label class="field"><span class="field__label" data-i18n="fld.email">Email</span><input class="input" type="email"></label>
+        <label class="field"><span class="field__label" data-i18n="fld.phone">Phone</span><input class="input" type="tel"></label>
+      </div>
+      <label class="field"><span class="field__label" data-i18n="col.package">Package</span><select class="select"><option>Standard · 150 €</option><option>Plus · 165 €</option><option>Early Bird · 135 €</option></select></label>
+    </div>
+    <div class="modal__foot">
+      <button class="btn" type="button" data-modal-close data-i18n="act.cancel">Cancel</button>
+      <button class="btn btn--primary" type="button" data-modal-close data-toast="Registration added as #17" data-toast-key="toast.added" data-i18n="madd.ok">Add registration</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/i18n.js?v=6"></script>
+<script src="js/muster.js?v=6"></script>
+<script src="js/data.js?v=6"></script>
+<script>
+document.addEventListener('muster:ready', () => {
+  const R = Muster, $ = R.$, $$ = R.$$, esc = R.esc;
+  const VIEWS = [
+    { id: 'all', k: 'v.all', en: 'All', icon: 'layers', fn: () => true },
+    { id: 'todo', k: 'v.todo', en: 'To do', icon: 'zap', fn: (p) => p.status === 'received' || (R.dueInfo(p) || {}).late },
+    { id: 'awaiting', k: 'st.awaiting', en: 'Awaiting deposit', icon: 'hourglass', fn: (p) => p.status === 'awaiting' },
+    { id: 'waitlist', k: 'st.waitlist', en: 'Waitlist', icon: 'clock', fn: (p) => p.status === 'waitlist' },
+    { id: 'secured', k: 'v.secured', en: 'Secured', icon: 'checkc', fn: (p) => p.status === 'secured' || p.status === 'paid' },
+    { id: 'cancelled', k: 'st.cancelled', en: 'Cancelled', icon: 'x', fn: (p) => p.status === 'cancelled' },
+  ];
+  let view = new URLSearchParams(location.search).get('view') || 'todo', layout = 'table';
+  const F = { minor: false, transport: false, allergy: false };
+  const people = R.PEOPLE;
+
+  function renderViews() {
+    $('#views').innerHTML = VIEWS.map((v) => `<button type="button" class="seg__item" role="tab" aria-selected="${v.id === view}" data-value="${v.id}">${R.icon(v.icon)}<span>${esc(R.t(v.k, v.en))}</span><span class="seg__count">${people.filter(v.fn).length}</span></button>`).join('');
+  }
+  const list = () => {
+    const q = $('#q').value.trim().toLowerCase();
+    const vf = VIEWS.find((v) => v.id === view).fn;
+    return people.filter(vf)
+      .filter((p) => !F.minor || p.minor).filter((p) => !F.transport || p.transport === 'need').filter((p) => !F.allergy || p.allergies)
+      .filter((p) => !q || [p.first, p.last, p.email, p.city, p.church, p.phone].join(' ').toLowerCase().includes(q));
+  };
+  const payCell = (p) => {
+    const pct = p.price ? Math.round((p.paid / p.price) * 100) : 0;
+    const cls = pct >= 100 ? 'meter--ok' : pct > 0 ? 'meter--accent' : '';
+    return `<div style="min-width:110px"><div class="num small" style="margin-bottom:5px"><b>${R.money(p.paid)}</b> <span class="faint">/ ${R.money(p.price)}</span></div><div class="meter meter--sm ${cls}"><i style="--v:${pct}%"></i></div></div>`;
+  };
+  const statusCell = (p) => { const d = R.dueInfo(p); return `${R.statusChip(p.status)}${d ? `<div class="small" style="margin-top:5px;color:var(${d.late ? '--bad' : d.soon ? '--warn' : '--ink-3'})">${esc(d.text)}</div>` : ''}`; };
+  const personCell = (p) => `<div class="person"><span class="avatar avatar--sm" data-hue style="--h:${R.hue(p)}">${R.initials(p)}</span><div style="min-width:0"><div class="person__name">${esc(p.first)} ${esc(p.last)}${p.minor ? ` <span class="chip chip--plain" style="height:20px;font-size:11.5px;margin-left:4px">${esc(R.t('tag.minor', 'minor'))}</span>` : ''}</div><div class="person__sub">${esc(p.email)}</div></div></div>`;
+
+  function render() {
+    renderViews();
+    const rows = list();
+    $('#count').textContent = R.t('reg.count', '{n} people', { n: rows.length });
+    $('#empty').hidden = rows.length > 0;
+    $('#table-view').hidden = layout !== 'table' || !rows.length;
+    $('#board-view').hidden = layout !== 'board' || !rows.length;
+    $('#rows').innerHTML = rows.map((p) => `
+      <tr data-href="${p.id}" tabindex="0">
+        <td class="cell-hide-sm"><span class="nr">${p.n}</span></td>
+        <td class="cell-main">${personCell(p)}</td>
+        <td data-label="${esc(R.t('col.package', 'Package'))}"><span class="tag">${esc(p.pkg)}</span></td>
+        <td data-label="${esc(R.t('col.status', 'Status'))}">${statusCell(p)}</td>
+        <td data-label="${esc(R.t('col.paid', 'Paid'))}">${payCell(p)}</td>
+        <td data-label="${esc(R.t('col.received', 'Received'))}" class="small muted cell-hide-sm">${R.fmtDate(p.created)}</td>
+      </tr>`).join('');
+    const cols = ['received', 'waitlist', 'awaiting', 'secured', 'paid', 'cancelled'];
+    $('#board-view').innerHTML = cols.map((s) => { const items = rows.filter((p) => p.status === s); return `
+      <section class="board__col" aria-label="${esc(R.t(R.STATUS[s].k, R.STATUS[s].en))}">
+        <div class="board__head">${R.statusChip(s)}<span>${items.length}</span></div>
+        ${items.map((p) => { const d = R.dueInfo(p); return `<a href="#${p.id}" class="card card--hover board__card" data-open="${p.id}">
+          <div class="item__head"><span class="avatar avatar--sm" data-hue style="--h:${R.hue(p)}">${R.initials(p)}</span><div style="min-width:0"><div class="person__name">${esc(p.first)} ${esc(p.last)}</div><div class="person__sub">#${p.n} · ${esc(p.city)}</div></div></div>
+          <div class="tags"><span class="tag">${esc(p.pkg)}</span>${p.minor ? `<span class="tag">${esc(R.t('tag.minor', 'minor'))}</span>` : ''}</div>
+          <div class="item__meta"><span class="meta">${R.icon('euro')}<b>${R.money(p.paid)}</b>&nbsp;/ ${R.money(p.price)}</span>${d ? `<span class="meta" style="color:var(${d.late ? '--bad' : '--ink-2'})">${R.icon('clock')}${esc(d.text)}</span>` : ''}</div>
+        </a>`; }).join('') || `<p class="small faint" style="padding:8px 4px">${esc(R.t('board.empty', 'Nobody here'))}</p>`}
+      </section>`; }).join('');
+    $$('[data-icon]').forEach(() => {}); // icons in markup above are inline already
+  }
+
+  /* ---------- the side peek ---------- */
+  let openP = null;
+  function nextStep(p) {
+    const d = R.dueInfo(p);
+    switch (p.status) {
+      case 'received': return { t: R.t('ns.received.t', 'Send the payment details'), s: R.t('ns.received.s', 'Starts the 48-hour deadline for the 50 € deposit.'), b: `<button class="btn btn--accent" type="button" data-modal-open="m-pay">${R.icon('send')}${esc(R.t('ns.received.b', 'Send details'))}</button>` };
+      case 'waitlist': return { t: R.t('ns.waitlist.t', 'Waiting for a free place'), s: R.t('ns.waitlist.s', 'Number {n} in the queue. When a place frees up, send the payment details.', { n: 1 }), b: `<button class="btn" type="button" data-modal-open="m-pay">${esc(R.t('ns.waitlist.b', 'Offer a place now'))}</button>` };
+      case 'awaiting': return d && d.late
+        ? { t: R.t('ns.late.t', 'Deadline passed, no payment recorded'), s: R.t('ns.late.s', 'Check Revolut first. If nothing arrived, free the place for the next person.'), b: `<button class="btn btn--danger" type="button" data-modal-open="m-cancel">${esc(R.t('ns.late.b', 'Free the place'))}</button><button class="btn btn--accent" type="button" data-modal-open="m-rec">${esc(R.t('ns.rec', 'Record payment'))}</button>` }
+        : { t: R.t('ns.await.t', 'Waiting for the deposit'), s: d ? d.text : '', b: `<button class="btn btn--accent" type="button" data-modal-open="m-rec">${R.icon('wallet')}${esc(R.t('ns.rec', 'Record payment'))}</button>` };
+      case 'secured': return { t: R.t('ns.secured.t', '{x} to collect on arrival', { x: R.money(p.price - p.paid) }), s: R.t('ns.secured.s', 'Cash at check-in on 3 January.'), b: `<button class="btn btn--accent" type="button" data-modal-open="m-rec">${esc(R.t('ns.secured.b', 'Mark as paid'))}</button>` };
+      case 'paid': return { t: R.t('ns.paid.t', 'All done'), s: R.t('ns.paid.s', 'Paid in full. Nothing left to do.'), b: '' };
+      default: return { t: R.t('ns.cancel.t', 'Cancelled'), s: R.t('ns.cancel.s', 'Restore it to put the person back in the queue, as new.'), b: `<button class="btn" type="button" data-toast="Restored as received" data-toast-key="toast.restored">${R.icon('undo')}${esc(R.t('ns.cancel.b', 'Restore'))}</button>` };
+    }
+  }
+  function openPeek(id, push = true) {
+    const p = people.find((x) => x.id === id); if (!p) return; openP = p;
+    $$('#rows tr').forEach((tr) => tr.setAttribute('aria-selected', String(tr.dataset.href === id)));
+    if (!list().some((x) => x.id === id)) { view = 'all'; render(); } // opened from a link: show it in context
+    const idx = list().findIndex((x) => x.id === id);
+    const ns = nextStep(p);
+    const tr = (v) => ({ own: R.t('tr.own', 'Own car'), need: R.t('tr.need', 'Needs transport'), unsure: R.t('tr.unsure', 'Not sure yet') }[v]);
+    const pct = Math.round((p.paid / p.price) * 100);
+    $('#peek').innerHTML = `
+      <div class="drawer__head">
+        <button class="btn btn--ghost btn--icon btn--sm" type="button" data-drawer-close aria-label="${esc(R.t('act.close', 'Close'))}">${R.icon('x')}</button>
+        <button class="btn btn--ghost btn--icon btn--sm" type="button" data-nav="-1" aria-label="${esc(R.t('act.prev', 'Previous'))}" ${idx <= 0 ? 'disabled' : ''}>${R.icon('chevl')}</button>
+        <button class="btn btn--ghost btn--icon btn--sm" type="button" data-nav="1" aria-label="${esc(R.t('act.next', 'Next'))}" ${idx >= list().length - 1 ? 'disabled' : ''}>${R.icon('chevr')}</button>
+        <span class="small faint">${idx + 1} / ${list().length}</span>
+        <div class="grow"></div>
+        <div class="menu">
+          <button class="btn btn--ghost btn--icon btn--sm" type="button" data-menu-btn aria-haspopup="menu" aria-expanded="false" aria-label="${esc(R.t('act.more', 'More'))}">${R.icon('more')}</button>
+          <div class="menu__list" role="menu" hidden>
+            <button class="menu__item" role="menuitem" type="button">${R.icon('edit')}${esc(R.t('peek.edit', 'Edit details'))}</button>
+            <button class="menu__item" role="menuitem" type="button" data-copy="peek-email">${R.icon('copy')}${esc(R.t('peek.copy', 'Copy email'))}</button>
+            <div class="menu__sep"></div>
+            <button class="menu__item" role="menuitem" type="button" data-modal-open="m-cancel" style="color:var(--bad)">${R.icon('x')}${esc(R.t('mcan.ok', 'Cancel registration'))}</button>
+          </div>
+        </div>
+      </div>
+      <div class="drawer__body">
+        <div class="row" style="gap:14px;margin-bottom:14px">
+          <span class="avatar avatar--lg" data-hue style="--h:${R.hue(p)}">${R.initials(p)}</span>
+          <div style="min-width:0"><div class="nr">#${p.n}</div><h2 class="doc-title" id="peek-title">${esc(p.first)} ${esc(p.last)}</h2></div>
+        </div>
+        <div class="row row--wrap" style="margin-bottom:18px">${R.statusChip(p.status)}<span class="tag">${esc(p.pkg)}</span>${p.minor ? `<span class="tag">${esc(R.t('tag.minor', 'minor'))}</span>` : ''}${p.allergies ? `<span class="chip chip--warn chip--plain">${R.icon('heart', 'i--sm')}${esc(p.allergies)}</span>` : ''}</div>
+
+        <div class="nextstep">
+          <div class="nextstep__text"><div class="nextstep__title">${esc(ns.t)}</div><div class="nextstep__sub">${esc(ns.s)}</div></div>
+          <div class="row row--wrap">${ns.b}</div>
+        </div>
+
+        <div class="doc-sec">
+          <h3 class="doc-sec__title">${R.icon('user')}${esc(R.t('peek.details', 'Details'))}</h3>
+          <dl class="props">
+            <dt>${R.icon('mail')}${esc(R.t('fld.email', 'Email'))}</dt><dd><a href="mailto:${esc(p.email)}" id="peek-email">${esc(p.email)}</a></dd>
+            <dt>${R.icon('phone')}${esc(R.t('fld.phone', 'Phone'))}</dt><dd><a href="https://wa.me/${p.phone.replace(/\D/g, '')}" target="_blank" rel="noopener">${esc(p.phone)}</a><span class="faint small">WhatsApp</span></dd>
+            <dt>${R.icon('cake')}${esc(R.t('fld.birth', 'Born'))}</dt><dd>${R.fmtDate(p.birth)} · ${esc(R.t('peek.age', '{a} years', { a: p.age }))}</dd>
+            <dt>${R.icon('pin')}${esc(R.t('fld.city', 'City'))}</dt><dd>${esc(p.city)}</dd>
+            <dt>${R.icon('church')}${esc(R.t('fld.church', 'Church'))}</dt><dd>${esc(p.church)}</dd>
+            <dt>${R.icon('shirt')}${esc(R.t('fld.shirt', 'T-shirt'))}</dt><dd>${esc(p.shirt) || '—'}</dd>
+            <dt>${R.icon('car')}${esc(R.t('fld.transport', 'Transport'))}</dt><dd>${esc(tr(p.transport))}</dd>
+            <dt>${R.icon('heart')}${esc(R.t('fld.allergies', 'Allergies & diet'))}</dt><dd class="${p.allergies ? '' : 'is-empty'}">${esc(p.allergies) || esc(R.t('none', 'None'))}</dd>
+            ${p.minor ? `<dt>${R.icon('shield')}${esc(R.t('fld.parent', 'Parent'))}</dt><dd>${esc(p.parent.name)} · <a href="tel:${esc(p.parent.phone)}">${esc(p.parent.phone)}</a> <span class="chip chip--ok" style="height:22px">${esc(R.t('peek.consent', 'consent given'))}</span></dd>` : ''}
+          </dl>
+        </div>
+
+        <div class="doc-sec">
+          <h3 class="doc-sec__title">${R.icon('wallet')}${esc(R.t('peek.payment', 'Payment'))}</h3>
+          <div class="row row--between" style="margin-bottom:8px"><span><b class="num" style="font-size:20px">${R.money(p.paid)}</b> <span class="muted">${esc(R.t('peek.of', 'of {x}', { x: R.money(p.price) }))}</span></span><span class="small muted">${esc(R.t('peek.left', '{x} left', { x: R.money(Math.max(0, p.price - p.paid)) }))}</span></div>
+          <div class="meter ${pct >= 100 ? 'meter--ok' : 'meter--accent'}"><i style="--v:${pct}%"></i></div>
+          ${p.paid ? `<ul class="timeline" style="margin-top:14px"><li><span class="timeline__icon timeline__icon--ok">${R.icon('check')}</span><div class="timeline__text">${R.money(Math.min(50, p.paid))} · Revolut<div class="timeline__meta">${R.fmtDate(p.created, 'time')} · Andrei P.</div></div></li>${p.paid > 50 ? `<li><span class="timeline__icon timeline__icon--ok">${R.icon('check')}</span><div class="timeline__text">${R.money(p.paid - 50)} · ${esc(R.t('pm.cash', 'Cash'))}<div class="timeline__meta">${esc(R.t('peek.checkin', 'at check-in'))} · Maria I.</div></div></li>` : ''}</ul>` : `<p class="small faint" style="margin-top:10px">${esc(R.t('peek.nopay', 'No payments yet.'))}</p>`}
+        </div>
+
+        <div class="doc-sec">
+          <h3 class="doc-sec__title">${R.icon('note')}${esc(R.t('peek.notes', 'Internal notes'))}</h3>
+          ${p.note ? `<div class="note" style="margin-bottom:10px"><div class="note__meta">Maria I. · ${R.fmtDate(new Date(Date.now() - 3600e3).toISOString(), 'time')}</div>${esc(p.note)}</div>` : ''}
+          <form class="stack stack--sm" onsubmit="event.preventDefault();Muster.toast(Muster.t('toast.note','Note added'));this.reset()">
+            <textarea class="textarea" style="min-height:72px" placeholder="${esc(R.t('peek.noteph', 'Write a note for the team… (signed with your name)'))}" required></textarea>
+            <div><button class="btn btn--sm" type="submit">${esc(R.t('peek.addnote', 'Add note'))}</button></div>
+          </form>
+        </div>
+
+        <div class="doc-sec">
+          <h3 class="doc-sec__title">${R.icon('history')}${esc(R.t('peek.history', 'History'))}</h3>
+          <ul class="timeline">
+            ${p.status !== 'received' && p.status !== 'waitlist' ? `<li><span class="timeline__icon timeline__icon--accent">${R.icon('mail')}</span><div class="timeline__text">${esc(R.t('h.paydetails', 'Payment details emailed'))}<div class="timeline__meta">${R.fmtDate(p.created, 'time')} · Andrei P.</div></div></li>` : ''}
+            <li><span class="timeline__icon">${R.icon('mail')}</span><div class="timeline__text">${esc(R.t('h.received', 'Confirmation emailed'))}<div class="timeline__meta">${R.fmtDate(p.created, 'time')} · ${esc(R.t('h.system', 'system'))}</div></div></li>
+            <li><span class="timeline__icon">${R.icon('form')}</span><div class="timeline__text">${esc(R.t('h.created', 'Sent the form'))}<div class="timeline__meta">${R.fmtDate(p.created, 'time')}</div></div></li>
+          </ul>
+        </div>
+      </div>`;
+    if (!$('#peek').classList.contains('is-open')) R.openDrawer('peek');
+    $('#m-pay-due').textContent = R.fmtDate(new Date(Date.now() + 48 * 3600e3).toISOString(), 'long');
+    if (push) history.replaceState(null, '', '#' + id);
+  }
+
+  document.addEventListener('click', (e) => {
+    const tr = e.target.closest('tr[data-href]'); if (tr) { openPeek(tr.dataset.href); return; }
+    const bc = e.target.closest('[data-open]'); if (bc) { e.preventDefault(); openPeek(bc.dataset.open); return; }
+    const nv = e.target.closest('[data-nav]'); if (nv && openP) { const l = list(); const i = l.findIndex((x) => x.id === openP.id) + Number(nv.dataset.nav); if (l[i]) openPeek(l[i].id); return; }
+    const f = e.target.closest('[data-f]'); if (f) { F[f.dataset.f] = !F[f.dataset.f]; f.setAttribute('aria-pressed', String(F[f.dataset.f])); render(); }
+  });
+  $('#views').addEventListener('seg:change', (e) => { view = e.detail; render(); });
+  $('#layout').addEventListener('seg:change', (e) => { layout = e.detail; render(); });
+  $('#q').addEventListener('input', render);
+  $('#clear').addEventListener('click', () => { $('#q').value = ''; Object.keys(F).forEach((k) => (F[k] = false)); $$('[data-f]').forEach((b) => b.setAttribute('aria-pressed', 'false')); view = 'all'; render(); });
+  $('#m-pay-ok').addEventListener('click', () => { R.closeModal(); R.toast(R.t('toast.paysent', 'Payment details sent · deadline started')); });
+  $('#m-cancel-ok').addEventListener('click', () => { R.closeModal(); R.toast(R.t('toast.cancelled', 'Registration cancelled · next on the waitlist notified')); });
+  $('#m-rec-form').addEventListener('submit', (e) => { e.preventDefault(); R.closeModal(); R.toast(R.t('toast.paysaved', 'Payment saved · status updated')); });
+  $('#m-rec-date').value = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Rome' }).format(new Date());
+  document.addEventListener('muster:lang', () => { render(); if (openP && $('#peek').classList.contains('is-open')) openPeek(openP.id, false); });
+  render();
+  if (location.hash.length > 1) openPeek(location.hash.slice(1), false);
+});
+</script>
+</body>
+</html>
