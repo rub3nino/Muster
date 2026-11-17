@@ -9,7 +9,11 @@
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 body {
-  margin: 0; background: var(--canvas); color: var(--ink);
+  margin: 0; color: var(--ink);
+  background-color: var(--canvas);
+  /* dotted canvas, as in Notion: only the empty space shows it, cards and tables stay plain white */
+  background-image: radial-gradient(circle, var(--dot-grid) 1px, transparent 1.4px);
+  background-size: 22px 22px; background-position: 11px 11px; background-attachment: fixed;
   font: var(--t-body); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
@@ -118,7 +122,7 @@ button { cursor: pointer; }
 .topbar {
   position: sticky; top: 0; z-index: 30; height: var(--topbar-h);
   display: flex; align-items: center; gap: var(--s3); padding: 0 var(--s7);
-  background: color-mix(in srgb, var(--canvas) 86%, transparent);
+  background: color-mix(in srgb, var(--canvas) 72%, transparent);
   -webkit-backdrop-filter: saturate(1.4) blur(12px); backdrop-filter: saturate(1.4) blur(12px);
   border-bottom: 1px solid transparent;
 }

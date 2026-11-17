@@ -50,6 +50,7 @@
   --info:          #2F6FD6;  --info-soft:   #E8F0FD;  --info-line:   #C3D6F6;
   --neutral-soft:  #EFEFED;
   --dot-live:      #34C759;
+  --dot-grid:      rgba(44, 44, 48, .13);  /* the Notion-style dotted canvas */
   --dot-alert:     #F0503C;
 
   /* ---- group colours (12, distinct in hue, readable on white) ---- */
@@ -98,32 +99,7 @@
   --topbar-h: 56px;
 }
 
-/* ---- dark: OS preference, unless the page forces light ---- */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    color-scheme: dark;
-    --canvas: #0F0F11; --canvas-2: #141416; --surface: #1B1B1F; --surface-2: #202025; --surface-sunk: #26262B;
-    --overlay: rgba(0, 0, 0, .55);
-    --line: #2A2A30; --line-strong: #36363D; --line-dashed: #34343A;
-    --ink: #ECECEF; --ink-2: #A4A4AD; --ink-3: #74747D; --ink-inverse: #111113;
-    --btn-primary: #F1F1F3; --btn-primary-h: #FFFFFF;
-    --accent: #8C80F7; --accent-ink: #A69CFA; --accent-soft: rgba(140, 128, 247, .16); --accent-soft-2: rgba(140, 128, 247, .24);
-    --focus: 0 0 0 3px rgba(140, 128, 247, .38);
-    --ok: #4CC46B; --ok-soft: rgba(76, 196, 107, .14); --ok-line: rgba(76, 196, 107, .32);
-    --warn: #E3A23B; --warn-soft: rgba(227, 162, 59, .14); --warn-line: rgba(227, 162, 59, .32);
-    --bad: #F26B61; --bad-soft: rgba(242, 107, 97, .14); --bad-line: rgba(242, 107, 97, .32);
-    --info: #6EA0F2; --info-soft: rgba(110, 160, 242, .14); --info-line: rgba(110, 160, 242, .32);
-    --neutral-soft: #26262B;
-  --g1: #F2555A; --g2: #FF8B3E; --g3: #F0C33C; --g4: #3DD68C; --g5: #19C9B4; --g6: #2BB8D9;
-  --g7: #6E89F7; --g8: #9B87F5; --g9: #C07AE6; --g10: #EE6FBF; --g11: #C99A72; --g12: #A3A2AB;
-    --g1: #F2555A; --g2: #FF8B3E; --g3: #F0C33C; --g4: #3DD68C; --g5: #19C9B4; --g6: #2BB8D9;
-    --g7: #6E89F7; --g8: #9B87F5; --g9: #C07AE6; --g10: #EE6FBF; --g11: #C99A72; --g12: #A3A2AB;
-    --sh-1: 0 1px 2px rgba(0, 0, 0, .4);
-    --sh-2: 0 1px 2px rgba(0, 0, 0, .35), 0 8px 24px rgba(0, 0, 0, .3);
-    --sh-3: 0 2px 8px rgba(0, 0, 0, .4), 0 24px 60px rgba(0, 0, 0, .5);
-    --sh-seg: 0 1px 2px rgba(0, 0, 0, .5);
-  }
-}
+/* ---- dark: only when the person picks it (light is the default, whatever the OS says) ---- */
 :root[data-theme="dark"] {
   color-scheme: dark;
   --canvas: #0F0F11; --canvas-2: #141416; --surface: #1B1B1F; --surface-2: #202025; --surface-sunk: #26262B;
@@ -142,6 +118,7 @@
   --sh-2: 0 1px 2px rgba(0, 0, 0, .35), 0 8px 24px rgba(0, 0, 0, .3);
   --sh-3: 0 2px 8px rgba(0, 0, 0, .4), 0 24px 60px rgba(0, 0, 0, .5);
   --sh-seg: 0 1px 2px rgba(0, 0, 0, .5);
+  --dot-grid: rgba(236, 236, 239, .09);
 }
 
 @media (max-width: 720px) {

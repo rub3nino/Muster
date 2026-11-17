@@ -148,11 +148,11 @@
   R.langSwitch = () => `<div class="lang" role="group" aria-label="Language">${LANGS.map((l) => `<button type="button" data-lang="${l}" aria-pressed="${l === R.lang}">${l.toUpperCase()}</button>`).join('')}</div>`;
 
   /* ---------------- theme ---------------- */
-  const theme = store.get('theme'); if (theme === 'dark' || theme === 'light') document.documentElement.dataset.theme = theme;
+  const theme = store.get('theme.v2'); document.documentElement.dataset.theme = theme === 'dark' ? 'dark' : 'light'; // light unless the person chose dark
   R.toggleTheme = () => {
-    const cur = document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const cur = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
     const next = cur === 'dark' ? 'light' : 'dark';
-    document.documentElement.dataset.theme = next; store.set('theme', next);
+    document.documentElement.dataset.theme = next; store.set('theme.v2', next);
   };
 
   /* ---------------- shell (sidebar + topbar) ---------------- */
