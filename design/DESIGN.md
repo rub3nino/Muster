@@ -19,6 +19,7 @@ Then visit <http://127.0.0.1:5610>. Add `?lang=it` or `?lang=ro` to any page, or
 | `css/pages.css` | Layouts that are not reusable: live control centre with phone preview, login, public form, email editor, lists, brand page. |
 | `js/muster.js` | Icons, shell (sidebar + topbar), i18n engine, theme, drawer/modal/focus trap, toasts. ~9 KB, no dependencies. |
 | `js/i18n.js` | Italian and Romanian strings (550 keys each). |
+| `css/groups.css` · `js/groups.js` | The Groups page: board, drag, live stage. |
 | `js/data.js` | Fictional demo people and packages. Delete it when you connect real data. |
 
 ## Screens
@@ -32,6 +33,7 @@ Then visit <http://127.0.0.1:5610>. Add `?lang=it` or `?lang=ro` to any page, or
 | `form-builder.html` | Fields (locked core fields + optional ones), text blocks, versioned consents, embed snippet. |
 | `offer.html` | Event, ages, packages, sales windows, deposit, Revolut link, reminder. |
 | `emails.html` | Eight templates, variables, per-language tabs, desktop/phone preview, test send. |
+| `groups.html` | Balanced, seeded mixing with four rules and pins; name-set preview with inline rename; board with drag (mouse and touch), number keys 1–9/0, a “Move to…” sheet on phones, undo (⌘/Ctrl+Z), draft kept on the device; announce by email; full-screen live reveal (→ / Space, ←, A, Esc). Logic in `js/groups.js`, styles in `css/groups.css`, colours `--g1…--g12` in tokens. |
 | `lists.html` | T-shirts, allergies (marked as health data), transport, minors with parents, rooms, money, cities. Copy or print. |
 | `activity.html` | Append-only log, filtered by kind; backup download. |
 | `team.html` | Roles explained, alerts, invite. |

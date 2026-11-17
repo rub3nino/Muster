@@ -40,6 +40,7 @@ Open <http://127.0.0.1:5610>. Add `?lang=it` or `?lang=ro`, or use the EN · IT 
 - **Deposits that are fair**: payment details by email start a deadline (48 h by default) that a resend never extends. A reminder goes out before it ends; the team is told when it passes. Nothing frees a place automatically.
 - **Live on site**: form mode (Open · Countdown · Paused · Closed), packages with their own windows and limits, places left, notices, scheduled changes. Every change is a draft until you review and publish it.
 - **Emails** for every step, with variables and a desktop / phone preview.
+- **Groups**: balanced, repeatable mixing (girls and boys evenly, ages spread, churches apart, one leader each), pinned people stay put, drag or press a number to move someone, undo everything. Name sets with preview (Fruit of the Spirit, camp theme, colours, tribes, your own), and a full-screen **live reveal** for the projector.
 - **Lists** for the kitchen, drivers and rooms: T-shirts, allergies, transport, minors with parents, money by package.
 - **Activity log** that can only grow, and roles: owner, organiser, read only.
 - **Private by default**: health and faith data are labelled where they appear and never land in logs or read-only exports.

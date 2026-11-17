@@ -86,6 +86,11 @@
     sliders: '<path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/>',
     layers: '<path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/>',
     arrowr: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+    groups: '<circle cx="6.5" cy="7" r="2.5"/><circle cx="17.5" cy="7" r="2.5"/><circle cx="12" cy="16" r="2.5"/><path d="M2.5 13c.5-1.8 2-3 4-3s3.5 1.2 4 3M13.5 13c.5-1.8 2-3 4-3s3.5 1.2 4 3M8 22c.5-1.8 2-3 4-3s3.5 1.2 4 3"/>',
+    shuffle: '<path d="M3 7h3.5c2.2 0 3.6 1 4.8 2.7l3.4 4.6c1.2 1.7 2.6 2.7 4.8 2.7H21M18 14l3 3-3 3M3 17h3.5c1.4 0 2.5-.4 3.4-1.1M14.6 8.1c.9-.7 2-1.1 3.4-1.1H21M18 4l3 3-3 3"/>',
+    present: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4M8 20h8M10 8.5v4l3.5-2z"/>',
+    pin2: '<path d="M9 3h6l-1 6 3 3v2H7v-2l3-3z"/><path d="M12 14v7"/>',
+    move: '<path d="M5 12h14M14 7l5 5-5 5"/><path d="M5 6v12"/>',
     swatch: '<rect x="3" y="3" width="8" height="18" rx="2"/><path d="M11 7.5 15.5 3l5.5 5.5L11 18.5"/><path d="M11 21h9a1 1 0 0 0 1-1v-6h-6"/>',
   };
   R.icon = (n, cls = '') => `<svg class="i ${cls}" viewBox="0 0 24 24" aria-hidden="true">${P[n] || P.info}</svg>`;
@@ -164,8 +169,11 @@
       { id: 'offer', href: 'offer.html', icon: 'tag', k: 'nav.offer', en: 'Event & pricing' },
       { id: 'emails', href: 'emails.html', icon: 'mail', k: 'nav.emails', en: 'Emails' },
     ] },
-    { group: ['nav.g.data', 'Records'], items: [
+    { group: ['nav.g.camp', 'At camp'], items: [
+      { id: 'groups', href: 'groups.html', icon: 'groups', k: 'nav.groups', en: 'Groups' },
       { id: 'lists', href: 'lists.html', icon: 'list', k: 'nav.lists', en: 'Lists' },
+    ] },
+    { group: ['nav.g.data', 'Records'], items: [
       { id: 'activity', href: 'activity.html', icon: 'history', k: 'nav.activity', en: 'Activity' },
       { id: 'team', href: 'team.html', icon: 'shield', k: 'nav.team', en: 'Team' },
     ] },
